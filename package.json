@@ -1,0 +1,38 @@
+{
+  "name": "news-api",
+  "version": "1.0.0",
+  "description": "Home task 1. Course FrontCamp.",
+  "main": "app.js",
+  "scripts": {
+    "build": "webpack --mode=development",
+    "watch": "webpack --mode=development --watch"
+  },
+  "babel": {
+    "presets": [
+      "@babel/env"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RudikAleksandr/news-api.git"
+  },
+  "keywords": [],
+  "author": "Aliaksandr Rudzin <aleksandr.rudin.98@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RudikAleksandr/news-api/issues"
+  },
+  "homepage": "https://github.com/RudikAleksandr/news-api#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.1.5",
+    "@babel/preset-env": "^7.1.5",
+    "babel-loader": "^8.0.4",
+    "eslint": "^5.9.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "inline-source-map": "^0.6.2",
+    "webpack": "^4.25.1",
+    "webpack-cli": "^3.1.2"
+  }
+}
