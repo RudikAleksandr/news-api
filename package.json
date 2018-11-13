@@ -4,7 +4,8 @@
   "description": "Home task 1. Course FrontCamp.",
   "main": "app.js",
   "scripts": {
-    "build": "webpack --mode=development",
+    "dev": "webpack --mode=development",
+    "build": "webpack --mode production",
     "watch": "webpack --mode=development --watch"
   },
   "babel": {
