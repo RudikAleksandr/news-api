@@ -9,7 +9,7 @@ export default class NewsApi {
   }
 
   static get URL_SOURCE() {
-    return 'https://newsapi.org/v2/top-headlines';
+    return 'https://newsapi.org/v2/everything';
   }
 
   static get requestOptions() {
