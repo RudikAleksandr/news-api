@@ -1,4 +1,4 @@
-import * as EventHandlers from './event-filter-sources';
+import * as EventHandlers from './events-filter-sources';
 
 export default class FilterSources {
   constructor(nodeSelector) {

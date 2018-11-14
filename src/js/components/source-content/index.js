@@ -20,11 +20,14 @@ export default class SourceContent {
 
     this.articlesContainer.forEach((article) => {
       const date = new Date(article.publishedAt).toLocaleString();
+      const innerimg = article.urlToImage
+        ? `<img src="${article.urlToImage}" width="180" height="140" alt="Image news" class="source-article__img">`
+        : '<div class="source-article__instead-img"></div>';
       const nodeArticle = createNode({
         tagName: 'article',
         className: 'source-article',
         innerHTML: `
-          <img class="source-article__img" src="${article.urlToImage}" alt="Image news" width="180" height="140">
+          ${innerimg}
           <h3 class="source-article__title">${article.title}</h3>
           <p class="source-article__description">${article.description}</p>
           <span class="source-article__date">${date}</span>
@@ -43,11 +46,16 @@ export default class SourceContent {
     const nodeArticles = this.nodeSourceContent.querySelector('.source-content__articles');
     nodeArticles.innerHTML = 'Please wait...';
 
-    NewsApi.httpGetArticlesSource(idSource, countNews).then(({ articles }) => {
-      this.articles = articles;
-      this.viewNameSourceContent();
-      this.viewArticles();
-    });
+    NewsApi.httpGetArticlesSource(idSource, countNews)
+      .then(({ articles }) => {
+        this.articles = articles;
+        this.viewNameSourceContent();
+        this.viewArticles();
+      })
+      .catch(({ statusText }) => {
+        nodeArticles.innerHTML = '';
+        alert(`Error. ${statusText}`);
+      });
   }
 
   viewArticles() {
