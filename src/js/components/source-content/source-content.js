@@ -1,4 +1,4 @@
-import NewsApi from '../../news-api';
+import NewsApi from '../../news-api/news-api';
 import { createNode } from '../../utils/node-util';
 
 export default class SourceContent {
@@ -52,9 +52,9 @@ export default class SourceContent {
         this.viewNameSourceContent();
         this.viewArticles();
       })
-      .catch(({ statusText }) => {
+      .catch((errorMessage) => {
         nodeArticles.innerHTML = '';
-        alert(`Error. ${statusText}`);
+        alert(`Error. ${errorMessage}`);
       });
   }
 

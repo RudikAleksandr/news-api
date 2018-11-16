@@ -1,5 +1,5 @@
-import SourceContent from '../source-content';
-import AllSources from '../all-sources';
+import SourceContent from '../source-content/source-content';
+import AllSources from '../all-sources/all-sources';
 
 function handlerChangeRange(event) {
   this.countNews = event.target.value;

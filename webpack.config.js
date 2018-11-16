@@ -1,10 +1,10 @@
 const path = require('path');
 
 module.exports = {
-  entry: ['@babel/polyfill', './src/js/app.js'],
+  entry: path.join(__dirname, 'src/js/app.js'),
   output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist'),
+    filename: '[name].bundle.js',
+    path: path.join(__dirname, 'dist'),
   },
   devtool: 'inline-source-map',
   module: {

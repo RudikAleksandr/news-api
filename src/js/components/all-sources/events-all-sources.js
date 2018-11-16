@@ -1,5 +1,5 @@
-import SourceContent from '../source-content';
-import FilterSources from '../filter-sources';
+import SourceContent from '../source-content/source-content';
+import FilterSources from '../filter-sources/filter-sources';
 
 function handlerClick(event) {
   const clickElem = event.target;
