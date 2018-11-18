@@ -25,18 +25,13 @@ export default class NewsApi {
   static httpGetAllSources() {
     return fetch(this.URL_ALL_SOURCES)
       .then((responce) => {
-        console.log('httpGetAllSources 1111111111');
-        console.dir(responce);
         if (responce.status !== 200) {
           return Promise.reject(responce);
         }
 
-        responce.prototype = Object.create(Response.prototype);
         return responce.json();
       })
       .catch(error => {
-        console.log('httpGetAllSources');
-        console.log(error);
         Promise.reject(error.statusText);
       });
   }
@@ -50,7 +45,6 @@ export default class NewsApi {
           return Promise.reject(responce);
         }
 
-        responce.prototype = Object.create(Response.prototype);
         return responce.json();
       })
       .catch(({ statusText }) => Promise.reject(statusText));

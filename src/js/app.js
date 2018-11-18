@@ -6,7 +6,6 @@ import FilterSources from './components/filter-sources/filter-sources';
 NewsApi.httpGetAllSources()
   .then(({ sources }) => {
     if (!sources) {
-      console.log(sources);
       Promise.reject(sources);
     }
     const allSources = new AllSources('.all-sources__list');
@@ -20,7 +19,4 @@ NewsApi.httpGetAllSources()
   })
   .catch((errorMessage) => {
     alert(`Error. ${errorMessage}`);
-    console.log('App');
-    console.log(errorMessage);
-
   });
