@@ -39,7 +39,7 @@ export default class AllSources {
   }
 
   createSources() {
-    const fragmentContainerList = new DocumentFragment();
+    const fragmentContainerList = document.createDocumentFragment();
 
     this.sourcesContainer.forEach((source) => {
       const nodeLI = createNode({

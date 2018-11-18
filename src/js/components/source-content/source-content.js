@@ -12,7 +12,7 @@ export default class SourceContent {
   }
 
   createArticles() {
-    const fragmentContainerArticles = new DocumentFragment();
+    const fragmentContainerArticles = document.createDocumentFragment();
     const nodeDiv = createNode({
       tagName: 'div',
       className: 'source-content__articles',
