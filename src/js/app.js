@@ -21,3 +21,9 @@ NewsApi.httpGetAllSources()
   .catch((errorMessage) => {
     alert(`Error. ${errorMessage}`);
   });
+
+document.querySelector('.header-show-news').onclick = function showNews() {
+  import('./components/show-news-button/show-news-button').then(module => {
+    module.showNews();
+  });
+};

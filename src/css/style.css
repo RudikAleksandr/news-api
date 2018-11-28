@@ -167,4 +167,8 @@ body {
   height: 140px;
 }
 
+.header-show-news {
+  position: relative;
+  left: 30%;
+}
 
