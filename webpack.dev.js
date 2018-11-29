@@ -35,6 +35,11 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.json$/,
+        exclude: /node_modules/,
+        use: 'my-loader',
+      },
     ],
   },
   plugins: [

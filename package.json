@@ -7,6 +7,7 @@
     "dev": "webpack --mode development --config webpack.dev.js",
     "build": "webpack --mode production --config webpack.prod.js",
     "watch": "webpack --mode=development --config webpack.dev.js --watch",
+    "custom": "webpack --mode development --config webpack.custom.js",
     "start": "webpack-dev-server --mode development --config webpack.dev.js --hot --colors --progress"
   },
   "repository": {
@@ -39,6 +40,7 @@
     "eslint-plugin-import": "^2.14.0",
     "html-webpack-plugin": "^3.2.0",
     "inline-source-map": "^0.6.2",
+    "loader-utils": "^1.1.0",
     "mini-css-extract-plugin": "^0.4.5",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "postcss-loader": "^3.0.0",
