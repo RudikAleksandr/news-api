@@ -1,5 +1,4 @@
 import '../css/style.css';
-import '../my.json';
 import NewsApi from './news-api/news-api';
 import AllSources from './components/all-sources/all-sources';
 import SourceContent from './components/source-content/source-content';
