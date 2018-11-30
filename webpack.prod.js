@@ -9,7 +9,7 @@ module.exports = {
   entry: ['whatwg-fetch', path.join(__dirname, 'src/js/app.js')],
   output: {
     path: path.join(__dirname, 'dist'),
-    publicPath: 'https://rudikaleksandr.github.io/news-api/',
+    publicPath: 'https://rudikaleksandr.github.io/news-api/dist/',
     filename: '[name].[hash].js',
   },
   resolveLoader: {
