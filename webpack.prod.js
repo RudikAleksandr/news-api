@@ -10,7 +10,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'dist'),
     publicPath: 'https://rudikaleksandr.github.io/news-api/',
-    filename: '[name].js',
+    filename: '[name].[hash].js',
   },
   resolveLoader: {
     modules: ['node_modules', path.resolve(__dirname, 'webpack-loaders')],
@@ -50,7 +50,7 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin('dist', {}),
     new MiniCssExtractPlugin({
-      filename: 'style.css',
+      filename: 'style.[contenthash].css',
     }),
     new HtmlWebpackPlugin({
       inject: false,
