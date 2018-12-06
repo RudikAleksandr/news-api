@@ -19,7 +19,9 @@ NewsApi.httpGetAllSources()
     sourceContent.redirectArticles(sources[0].id, countNews);
   })
   .catch((errorMessage) => {
-    alert(`Error. ${errorMessage}`);
+    import('./error-handler/error-handler').then(module => {
+      module.default.showErrorMessage();
+    });
   });
 
 document.querySelector('.header-show-news').onclick = function showNews() {

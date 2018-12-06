@@ -53,8 +53,10 @@ export default class SourceContent {
         this.viewArticles();
       })
       .catch((errorMessage) => {
-        nodeArticles.innerHTML = '';
-        alert(`Error. ${errorMessage}`);
+        import('../../error-handler/error-handler').then(module => {
+          module.default.showErrorMessage();
+          nodeArticles.innerHTML = '';
+        });
       });
   }
 

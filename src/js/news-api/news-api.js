@@ -1,7 +1,7 @@
 
 export default class NewsApi {
   static get API_KEY() {
-    return '7e92c05c99e645baacb7560198807645';
+    return '7e92c05c99e645baacb7560198807645A';
   }
 
   static get URL_ALL_SOURCES() {
