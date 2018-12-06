@@ -1,5 +1,5 @@
 import '../css/style.css';
-import ProxyNewsApiFactory from './news-api/proxy-news-api-factory';
+import ProxyNewsApiFactory from './models/news-api/proxy-news-api-factory';
 import AllSources from './components/all-sources/all-sources';
 import SourceContent from './components/source-content/source-content';
 import FilterSources from './components/filter-sources/filter-sources';
@@ -21,7 +21,7 @@ getNewsApi.httpGetAllSources()
     sourceContent.redirectArticles(sources[0].id, countNews);
   })
   .catch((errorMessage) => {
-    import('./error-handler/error-handler').then(module => {
+    import('./models/error-handler/error-handler').then(module => {
       module.default.showErrorMessage();
     });
   });

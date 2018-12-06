@@ -1,4 +1,4 @@
-import ProxyNewsApiFactory from '../../news-api/proxy-news-api-factory';
+import ProxyNewsApiFactory from '../../models/news-api/proxy-news-api-factory';
 import { createNode } from '../../utils/node-util';
 export default class SourceContent {
   constructor(nodeSelector) {
@@ -54,7 +54,7 @@ export default class SourceContent {
         this.viewArticles();
       })
       .catch((errorMessage) => {
-        import('../../error-handler/error-handler').then(module => {
+        import('../../models/error-handler/error-handler').then(module => {
           module.default.showErrorMessage();
           nodeArticles.innerHTML = '';
         });
