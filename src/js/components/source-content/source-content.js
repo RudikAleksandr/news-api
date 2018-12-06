@@ -1,6 +1,5 @@
-import NewsApi from '../../news-api/news-api';
+import NewsApiFactory from '../../news-api/news-api-factory';
 import { createNode } from '../../utils/node-util';
-
 export default class SourceContent {
   constructor(nodeSelector) {
     this.nodeSourceContent = document.querySelector(nodeSelector);
@@ -44,9 +43,11 @@ export default class SourceContent {
 
   redirectArticles(idSource, countNews) {
     const nodeArticles = this.nodeSourceContent.querySelector('.source-content__articles');
+    const getNewsApi = NewsApiFactory('GET');
     nodeArticles.innerHTML = 'Please wait...';
 
-    NewsApi.httpGetArticlesSource(idSource, countNews)
+     
+    getNewsApi.httpGetArticlesSource(idSource, countNews)
       .then(({ articles }) => {
         this.articles = articles;
         this.viewNameSourceContent();

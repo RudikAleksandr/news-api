@@ -1,10 +1,12 @@
 import '../css/style.css';
-import NewsApi from './news-api/news-api';
+import NewsApiFactory from './news-api/news-api-factory';
 import AllSources from './components/all-sources/all-sources';
 import SourceContent from './components/source-content/source-content';
 import FilterSources from './components/filter-sources/filter-sources';
 
-NewsApi.httpGetAllSources()
+const getNewsApi = NewsApiFactory('GET');
+
+getNewsApi.httpGetAllSources()
   .then(({ sources }) => {
     if (!sources) {
       Promise.reject(sources);
