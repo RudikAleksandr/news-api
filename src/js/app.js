@@ -1,10 +1,10 @@
 import '../css/style.css';
-import NewsApiFactory from './news-api/news-api-factory';
+import ProxyNewsApiFactory from './news-api/proxy-news-api-factory';
 import AllSources from './components/all-sources/all-sources';
 import SourceContent from './components/source-content/source-content';
 import FilterSources from './components/filter-sources/filter-sources';
 
-const getNewsApi = NewsApiFactory('GET');
+const getNewsApi = ProxyNewsApiFactory('GET');
 
 getNewsApi.httpGetAllSources()
   .then(({ sources }) => {

@@ -1,4 +1,4 @@
-import NewsApiFactory from '../../news-api/news-api-factory';
+import ProxyNewsApiFactory from '../../news-api/proxy-news-api-factory';
 import { createNode } from '../../utils/node-util';
 export default class SourceContent {
   constructor(nodeSelector) {
@@ -43,7 +43,7 @@ export default class SourceContent {
 
   redirectArticles(idSource, countNews) {
     const nodeArticles = this.nodeSourceContent.querySelector('.source-content__articles');
-    const getNewsApi = NewsApiFactory('GET');
+    const getNewsApi = ProxyNewsApiFactory('GET');
     nodeArticles.innerHTML = 'Please wait...';
 
      
