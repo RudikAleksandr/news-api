@@ -1,5 +1,5 @@
-const dataNews = [
-  {
+const dataNews = {
+  1: {
     category: 'general',
     country: 'au',
     description: 'Australias most trusted',
@@ -7,7 +7,7 @@ const dataNews = [
     language: 'en',
     name: 'ABC News (AU)',
   },
-  {
+  2: {
     category: 'general',
     country: 'au',
     description: 'analysis from the ',
@@ -15,7 +15,7 @@ const dataNews = [
     language: 'en',
     name: 'Al Jazeera English',
   },
-  {
+  3: {
     category: 'technology',
     country: 'us',
     description: 'PC enthusiasts resou',
@@ -23,6 +23,6 @@ const dataNews = [
     language: 'en',
     name: 'Ars Technica',
   },
-];
+};
 
 export default dataNews;
