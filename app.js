@@ -3,6 +3,8 @@ import express from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
+import winston from 'winston';
+import expressWinston from 'express-winston';
 import indexRouter from './routes/index';
 import newsRouter from './routes/news';
 
@@ -11,6 +13,14 @@ const app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
+
+// log winston
+app.use(expressWinston.logger({
+  transports: [
+    new winston.transports.File({filename: 'combined.log'}),
+  ],
+  msg: "HTTP {{req.method}} {{req.url}}", 
+}));
 
 app.use(logger('dev'));
 app.use(express.json());
