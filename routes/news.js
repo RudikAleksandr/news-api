@@ -1,40 +1,61 @@
 import express from 'express';
-import dataNews from '../data-news';
+import * as DbNews from '../db/news'; 
 
 const router = express.Router();
 
-router.get('/', (req, res, next) => {
-  res.json(dataNews);
-});
+router.get('/', (req, res) => {
+  DbNews.findAllNews((err, newsData) => {
+    if (err) {
+      res.json(err);
+    } 
 
-router.get('/:id', (req, res, next) => {
-  const news = dataNews[req.params.id];
-  res.json(news);
-});
-
-router.post('/', (req, res, next) => {
-  const news = req.body;
- 
-  dataNews[news.id] = news;
-  res.json(news);
-});
-
-router.put('/:id', (req, res, next) => {
-  const reqNews = req.body;
-  const updateNews = dataNews[reqNews.id];
-  
-  Object.keys(reqNews).forEach(key => {
-    if (key in updateNews) {
-      updateNews[key] = reqNews[key];
-    }
+    res.json(newsData);
   });
-
-  res.json(updateNews);
 });
 
-router.delete('/:id', (req, res, next) => {
-  const result = delete dataNews[req.params.id];
-  res.json({result});
+router.get('/:id', (req, res) => {
+  const id = req.params.id;
+  DbNews.findNewsById(id, (err, newsData) => {
+    if (err) {
+      res.json(err);
+    } 
+
+    res.json(newsData);
+  });
+});
+
+router.post('/', (req, res) => {
+  const news = req.body; 
+  DbNews.createNews(news, (err, newsData) => {
+    if (err) {
+      res.json(err);
+    } 
+
+    res.json(newsData);
+  });
+});
+
+router.put('/:id', (req, res) => {
+  const news = req.body;
+  const id = req.params.id;
+  DbNews.updateNewsById(id, news, (err, newsData) => {
+    if (err) {
+      res.json(err);
+    } 
+
+    res.json(newsData);
+  });
+});
+
+router.delete('/:id', (req, res) => {
+  const id = req.params.id;
+  DbNews.removeNewsById(id, (err, newsData) => {
+    if (err) {
+      res.json(err);
+    } 
+
+    res.json(newsData);
+  });
 });
 
 export default router;
