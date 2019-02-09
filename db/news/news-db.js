@@ -1,15 +1,4 @@
-import mongoose from 'mongoose';
-
-const NAME_MODEL = 'News';
-const newsSchema = new mongoose.Schema({
-  _id: Number,
-  category: String,
-  country: String,
-  description: String,
-  language: String,
-  name: String,
-});
-const NewsModel = mongoose.model(NAME_MODEL, newsSchema);
+import NewsModel from './news-model';
 
 function createNews(newsData, callback) {
   NewsModel.create(newsData, callback);
@@ -30,7 +19,6 @@ function updateNewsById(id, dataUpdate,callback) {
 function removeNewsById(id, callback) {
   NewsModel.findByIdAndRemove(id, callback);
 }
-
 
 export {
   createNews,

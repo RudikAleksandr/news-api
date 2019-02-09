@@ -1,5 +1,5 @@
 import express from 'express';
-import * as DbNews from '../db/news'; 
+import * as DbNews from '../db/news/news-db'; 
 
 const router = express.Router();
 
@@ -36,6 +36,10 @@ router.post('/', (req, res) => {
 });
 
 router.put('/:id', (req, res) => {
+  if (!req.session.passport.user) {
+    res.redirect('/login');
+  }
+
   const news = req.body;
   const id = req.params.id;
   DbNews.updateNewsById(id, news, (err, newsData) => {
@@ -48,6 +52,10 @@ router.put('/:id', (req, res) => {
 });
 
 router.delete('/:id', (req, res) => {
+  if (!req.session.passport.user) {
+    res.redirect('/login');
+  }
+
   const id = req.params.id;
   DbNews.removeNewsById(id, (err, newsData) => {
     if (err) {
