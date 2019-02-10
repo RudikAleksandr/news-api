@@ -1,0 +1,42 @@
+.header__row1,
+.header__row2 {
+  border-bottom: 1px solid #aaa;
+  min-height: 60px;
+}
+
+.header__row3 {
+  min-height: 60px;
+}
+
+.header {
+  border: 1px solid #aaa;
+}
+
+.header__name-logo {
+  margin-left: 10px;
+}
+
+.header__log-out-btn {
+  margin-right: 10px;
+}
+
+.header__user-login {
+  margin-right: 20px;
+}
+
+.header__source-name{
+  text-align: center;
+}
+
+.header__source-name {
+  font-size: 1.8em;
+}
+
+.header__select-source {
+  min-width: 160px;
+  margin-left: 10px;
+}
+
+.header__add-article-btn {
+  margin-right: 10px;
+}

@@ -1,0 +1,9 @@
+main {
+  margin-top: 10px;
+  flex: 1;
+}
+
+footer {
+  min-height: 50px;
+  border: 1px solid #aaa;
+}

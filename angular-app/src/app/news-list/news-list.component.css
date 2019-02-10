@@ -1,0 +1,11 @@
+.news-item {
+  width: 90%;
+  border: 1px solid #aaa;
+  margin-top: 10px;
+}
+
+.news-list__load-btn {
+  width: 90%;
+  margin-top: 10px;
+  min-height: 40px;
+}
