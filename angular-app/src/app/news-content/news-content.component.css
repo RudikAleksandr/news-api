@@ -1,0 +1,35 @@
+.news-content {
+  padding-top: 5px;
+  padding-bottom: 30px;
+  width: 90%;
+  margin: 0 auto;
+  border: 1px solid #aaa;
+  margin-top: 10px;
+}
+
+.news-content__photo {
+  width: 200px;
+  height: 180px;
+  margin: 15px;
+  background-color: #aaa;
+}
+
+.news-content__date {
+  display: block;
+  margin-top: 20px;
+  margin-bottom: 15px;
+}
+
+.news-content__info {
+  width: 90%;
+}
+
+.news-content__btn {
+  margin-top: 10px;
+  margin-right: 20px;
+}
+
+.news-content__btn button {
+  min-width: 80px;
+  margin: 5px 0;
+}

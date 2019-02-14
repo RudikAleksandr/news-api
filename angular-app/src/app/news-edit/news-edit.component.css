@@ -1,0 +1,38 @@
+.news-edit {
+  padding-top: 10px;
+  padding-bottom: 35px;
+  width: 90%;
+  margin: 0 auto;
+  border: 1px solid #aaa;
+  margin-top: 10px;
+}
+
+.news-edit label {
+  margin-top: 15px;
+}
+
+.news-edit__image-label {
+  display: inline-block;
+  padding-right: 18%;
+}
+
+.news-edit__radio {
+  margin-left: 20px;
+}
+
+.news-edit__row {
+  width: 42%;
+}
+
+.news-edit__content {
+  min-height: 180px;
+}
+
+.news-edit__btn-block {
+  height: 100%;
+}
+
+.news-edit__btn-block button {
+  width: 120px;
+  height: 40px;
+}

@@ -1,11 +1,20 @@
-.news-item {
+.news-list,
+.news-list__item,
+.news-list__load-btn {
   width: 90%;
+}
+
+.news-list  {
+  margin: 0 auto;
+}
+
+.news-list__item {
   border: 1px solid #aaa;
   margin-top: 10px;
 }
 
 .news-list__load-btn {
-  width: 90%;
   margin-top: 10px;
+  margin-bottom: 20px;
   min-height: 40px;
 }

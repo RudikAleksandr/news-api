@@ -7,13 +7,17 @@ import { AppComponent } from './app.component';
 import { HeaderAppComponent } from './header-app/header-app.component';
 import { NewsItemComponent } from './news-item/news-item.component';
 import { NewsListComponent } from './news-list/news-list.component';
+import { NewsContentComponent } from './news-content/news-content.component';
+import { NewsEditComponent } from './news-edit/news-edit.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderAppComponent,
     NewsItemComponent,
-    NewsListComponent
+    NewsListComponent,
+    NewsContentComponent,
+    NewsEditComponent
   ],
   imports: [
     BrowserModule,

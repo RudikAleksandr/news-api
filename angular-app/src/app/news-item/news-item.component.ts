@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'news-item',
@@ -6,10 +6,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./news-item.component.css']
 })
 export class NewsItemComponent implements OnInit {
+  @Input() news: Object;
 
-  constructor() { }
+  constructor() {
+    // this.news.publishedAt = new Date(this.news.publishedAt).toString();
+   }
 
   ngOnInit() {
+    console.log(this.news);
   }
+
+}
+
+interface IArticle {
 
 }

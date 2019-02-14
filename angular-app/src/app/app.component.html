@@ -1,8 +1,15 @@
-<header-app></header-app>
+<header-app
+  [sources]="sourcesNews"
+  (idSelectedSource)="handlerSelectedSource($event)">
+</header-app>
 <main class="container">
-  <news-list class="row"></news-list>
+  <news-list
+    class="row"
+    [newsList]="allNews"
+  ></news-list>
+
 </main>
-<footer class="container justify-content-around align-items-center">
+<footer class="d-flex justify-content-around align-items-center">
   <span>Footer</span>
   <span>Powered by NewsAPI</span>
 </footer>

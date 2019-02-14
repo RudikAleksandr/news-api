@@ -1,7 +1,10 @@
-<section class="d-flex flex-column align-items-center">
-    <news-item class="news-item"></news-item>
-    <news-item class="news-item"></news-item>
-    <button class="news-list__load-btn">Load more</button>
+<section class="news-list d-flex flex-column align-items-center">
+  <news-item
+    *ngFor="let news of newsList"
+    [news]="news"
+    class="news-list__item"
+  ></news-item>
+  <button class="news-list__load-btn">Load more</button>
 </section>
 
 

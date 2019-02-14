@@ -1,16 +1,16 @@
-<section class="d-flex justify-content-between align-items-center">
-  <div class="news-item__photo"></div>
+<section class="news-item d-flex justify-content-between align-items-center">
+  <img class="news-item__photo" alt="photo news" [src]="news.urlToImage">
   <div class="news-item__info">
     <div class="d-flex justify-content-between">
-      <h2 class="news-item__name">NewsLine</h2>
-      <span class="news-item__date-time">Date: dd/mm/yy : time</span>
+      <h2 class="news-item__name">{{news.title}}</h2>
+      <span class="news-item__date-time">{{news.publishedAt}}</span>
     </div>
     <p class="news-item__description">
-      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Earum quia suscipit voluptas dolorem quos eligendi amet eaque doloribus beatae delectus.
+      {{news.description}}
     </p>
-    <a href="#" class="news-item__link">Read more...</a>
+    <a [href]="news.url" class="news-item__link">Read more...</a>
   </div>
-  <div class="news-item__block-btn">
+  <div *ngIf="news.isUserNews" class="news-item__block-btn d-flex flex-column">
     <button>Edit</button>
     <button>Delete</button>
   </div>
