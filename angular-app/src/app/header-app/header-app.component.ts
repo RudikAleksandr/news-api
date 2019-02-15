@@ -8,11 +8,13 @@ import { element } from '@angular/core/src/render3';
   styleUrls: ['./header-app.component.css']
 })
 export class HeaderAppComponent implements OnInit {
-  public isCreatedMe: Boolean;
-  private sourceName: String;
+  public isCreatedUserNews: boolean;
+  private sourceName: string;
+  private NAME_USER_NEWS: string = 'My news';
 
   @Input() sources: Array<Object>;
   @Output() idSelectedSource: EventEmitter<string> = new EventEmitter();
+  @Output() createdUserNews: EventEmitter<boolean> = new EventEmitter();
 
   constructor() {
 
@@ -23,12 +25,18 @@ export class HeaderAppComponent implements OnInit {
   }
 
   onChangeCreatedMe() {
-    this.isCreatedMe = !this.isCreatedMe;
-  }
-  onChangeSource(event) {
-    const source: any = this.sources[event.target.value];
-    this.sourceName = source.name;
-    this.idSelectedSource.emit(source.id);
+    this.isCreatedUserNews = !this.isCreatedUserNews;
+    this.createdUserNews.emit(this.isCreatedUserNews);
   }
 
+  onChangeSource(event) {
+    const source: any = this.sources[event.target.value];
+    if (source) {
+      this.sourceName = source.name;
+      this.idSelectedSource.emit(source.id);
+    } else {
+      this.sourceName = '';
+      this.idSelectedSource.emit('');
+    }
+  }
 }

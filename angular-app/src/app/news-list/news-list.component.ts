@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'news-list',
@@ -7,10 +8,16 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class NewsListComponent implements OnInit {
   @Input() newsList: Array<Object> = [];
+  @Output() clickLoadButton: EventEmitter<number> = new EventEmitter();
 
   constructor() { }
 
   ngOnInit() {
+
+  }
+
+  handlerClickLoadButton() {
+    this.clickLoadButton.emit(this.newsList.length);
   }
 
 }

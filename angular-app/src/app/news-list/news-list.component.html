@@ -4,7 +4,11 @@
     [news]="news"
     class="news-list__item"
   ></news-item>
-  <button class="news-list__load-btn">Load more</button>
+  <button
+    *ngIf="newsList.length"
+    (click)="handlerClickLoadButton()"
+    class="news-list__load-btn"
+  >Load more</button>
 </section>
 
 
