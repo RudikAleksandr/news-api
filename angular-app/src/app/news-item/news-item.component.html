@@ -12,6 +12,6 @@
   </div>
   <div *ngIf="news.isUserNews" class="news-item__block-btn d-flex flex-column">
     <button>Edit</button>
-    <button>Delete</button>
+    <button (click)="handlerDeleteNews()">Delete</button>
   </div>
 </section>

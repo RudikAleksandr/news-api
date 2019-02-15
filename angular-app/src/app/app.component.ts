@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import NewsAPIUtil from '../utils/news-api-utils';
-import userNews from '../db/user-news';
+import UserNewsModel from '../models/news-user-model';
 
 @Component({
   selector: 'app-root',
@@ -62,7 +62,7 @@ export class AppComponent {
     this.isUserNews = isCreatedUserNews;
 
     if (isCreatedUserNews) {
-      this.setNews(userNews);
+      this.setNews(UserNewsModel.getUserNews());
     } else if (this.idSelectedSource) {
       this.setNewsBySourceId(this.idSelectedSource);
     } else {
@@ -84,6 +84,12 @@ export class AppComponent {
     } else {
       this.httpGetArticlesSource(this.idSelectedSource, newCountVewsNews);
     }
+  }
+
+  handlerDeleteNews(id: string) {
+    const newCountViewNews = this.viewNews.length - 1;
+    UserNewsModel.removeUserNewsById(id);
+    this.setNews(UserNewsModel.getUserNews(), newCountViewNews);
   }
 }
 

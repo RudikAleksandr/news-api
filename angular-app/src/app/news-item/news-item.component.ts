@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'news-item',
@@ -7,16 +8,17 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class NewsItemComponent implements OnInit {
   @Input() news: Object;
+  @Output() deleteNews: EventEmitter<any> = new EventEmitter();
 
   constructor() {
-    // this.news.publishedAt = new Date(this.news.publishedAt).toString();
+
    }
 
   ngOnInit() {
+
   }
 
-}
-
-interface IArticle {
-
+  handlerDeleteNews() {
+    this.deleteNews.emit(this.news['publishedAt']);
+  }
 }

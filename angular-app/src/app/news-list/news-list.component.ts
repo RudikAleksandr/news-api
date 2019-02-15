@@ -9,6 +9,7 @@ import { EventEmitter } from '@angular/core';
 export class NewsListComponent implements OnInit {
   @Input() newsList: Array<Object> = [];
   @Output() clickLoadButton: EventEmitter<number> = new EventEmitter();
+  @Output() deleteNews: EventEmitter<string> = new EventEmitter();
 
   constructor() { }
 
@@ -18,6 +19,10 @@ export class NewsListComponent implements OnInit {
 
   handlerClickLoadButton() {
     this.clickLoadButton.emit(this.newsList.length);
+  }
+
+  handleDeleteNews(id: string) {
+    this.deleteNews.emit(id);
   }
 
 }
