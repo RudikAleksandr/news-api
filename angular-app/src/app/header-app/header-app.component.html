@@ -21,8 +21,8 @@
       <option *ngFor="let source of sources; let i = index;" [value]="i">{{source.name}}</option>
     </select>
     <div>
-      <input type="text" class="header__filter-text">
-      <button class="header__filter-btn">Filter</button>
+      <input type="text" class="header__filter-text" (input)="onchangeKeyWords($event)">
+      <button class="header__filter-btn" (click)="onClickFilter()">Filter</button>
     </div>
     <label for="me-created">
       <input

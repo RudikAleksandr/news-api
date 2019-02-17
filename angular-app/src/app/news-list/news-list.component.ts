@@ -18,7 +18,7 @@ export class NewsListComponent implements OnInit {
   }
 
   handlerClickLoadButton() {
-    this.clickLoadButton.emit(this.newsList.length);
+    this.clickLoadButton.emit();
   }
 
   handleDeleteNews(id: string) {

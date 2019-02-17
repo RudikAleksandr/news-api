@@ -8,7 +8,7 @@
     <p class="news-item__description">
       {{news.description}}
     </p>
-    <a [href]="news.url" class="news-item__link">Read more...</a>
+    <a [href]="news.url" target="_blank" class="news-item__link">Read more...</a>
   </div>
   <div *ngIf="news.isUserNews" class="news-item__block-btn d-flex flex-column">
     <button>Edit</button>

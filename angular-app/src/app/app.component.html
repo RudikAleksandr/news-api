@@ -2,13 +2,14 @@
   [sources]="sourcesNews"
   (idSelectedSource)="handlerSelectedSource($event)"
   (createdUserNews)="handlerCreatedUserNews($event)"
+  (filterByKeyWords)="handlerFilterByKeyWords($event)"
 >
 </header-app>
 <main class="container">
   <news-list
     class="row"
     [newsList]="viewNews"
-    (clickLoadButton)="handlerClickLoad($event)"
+    (clickLoadButton)="handlerClickLoad()"
     (deleteNews)="handlerDeleteNews($event)"
   ></news-list>
 

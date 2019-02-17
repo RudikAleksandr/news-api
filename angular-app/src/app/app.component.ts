@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import NewsAPIUtil from '../utils/news-api-utils';
-import UserNewsModel from '../models/news-user-model';
+import NewsAPIUtil from '../utils/news-api';
+import DbNewsUser from '../utils/db-news-user';
+import CacheNews from '../utils/cache-news';
 
 @Component({
   selector: 'app-root',
@@ -10,11 +11,12 @@ import UserNewsModel from '../models/news-user-model';
 export class AppComponent {
   public sourcesNews: Array<Object>;
   public viewNews: Array<Object> =  [];
-  private allNews: Array<Object> =  [];
   private idSelectedSource: string;
-  private cacheLoadedNews: Object = {};
-  private COUNT_ADD_VIEW_NEWS: number = 5;
   private isUserNews: boolean = false;
+  private wordsForFilter: Array<string> = null;
+  private COUNT_ADD_VIEW_NEWS: number = 5;
+  private ID_USER_SOURCE: string = 'userSource';
+  private FIELDS_FILTER = ['author', 'description', 'title'];
 
   ngOnInit() {
     this.initSourcesNews();
@@ -26,23 +28,30 @@ export class AppComponent {
      });
   }
 
-  httpGetArticlesSource(idSelectedSource: string, countNews: number = 5) {
+  httpGetArticlesSource(idSelectedSource: string, countNews: number = this.COUNT_ADD_VIEW_NEWS) {
     NewsAPIUtil.httpGetArticlesSource(idSelectedSource, countNews).then(({articles}) => {
-      this.cacheLoadedNews[idSelectedSource] = articles;
-      this.setNews(articles, countNews);
+      CacheNews.setToCache(idSelectedSource, articles);
+      this.viewNews = articles;
     });
   }
 
-  setNews(news:  Array<Object>, countViewNews: number = 0) {
-    this.allNews = news;
-    this.viewNews = news.slice(0, countViewNews || this.COUNT_ADD_VIEW_NEWS);
+  httpGetFilterArticlesSource(idSelectedSource: string, countNews: number = this.COUNT_ADD_VIEW_NEWS, wordsForFilter: Array<Object>) {
+    const filter = wordsForFilter.join(' ');
+    NewsAPIUtil.httpGetArticlesSource(idSelectedSource, countNews, filter).then(({articles}) => {
+      this.viewNews = articles;
+    });
   }
 
-  setNewsBySourceId(idSelectedSource: string) {
-    const cachedNews = this.cacheLoadedNews[idSelectedSource];
 
-    if (cachedNews) {
-      this.setNews(cachedNews);
+  setNewsBySourceId(idSelectedSource: string) {
+    const cacheNews = CacheNews.getFromCache(idSelectedSource);
+
+    if (cacheNews && cacheNews.length >= this.COUNT_ADD_VIEW_NEWS) {
+      this.viewNews = [...cacheNews.slice(0, this.COUNT_ADD_VIEW_NEWS)];
+    } else if (idSelectedSource === this.ID_USER_SOURCE) {
+      const userNews = DbNewsUser.getUserNews(0, this.COUNT_ADD_VIEW_NEWS);
+      CacheNews.setToCache(this.ID_USER_SOURCE, userNews);
+      this.viewNews = [...userNews];
     } else {
       this.httpGetArticlesSource(idSelectedSource);
     }
@@ -53,45 +62,83 @@ export class AppComponent {
       this.idSelectedSource = idSelectedSource;
       this.setNewsBySourceId(idSelectedSource);
     } else {
-      this.idSelectedSource = '';
-      this.setNews([]);
+      this.idSelectedSource = null;
+      this.viewNews = [];
     }
   }
 
   handlerCreatedUserNews(isCreatedUserNews: boolean) {
     this.isUserNews = isCreatedUserNews;
+    const idSelectedSource = isCreatedUserNews ? this.ID_USER_SOURCE : this.idSelectedSource;
 
-    if (isCreatedUserNews) {
-      this.setNews(UserNewsModel.getUserNews());
-    } else if (this.idSelectedSource) {
-      this.setNewsBySourceId(this.idSelectedSource);
+    if (idSelectedSource) {
+      this.setNewsBySourceId(idSelectedSource);
     } else {
-      this.setNews([]);
+      this.viewNews = [];
     }
   }
 
-  handlerClickLoad(countViewNews: number) {
-    const newCountVewsNews = countViewNews + this.COUNT_ADD_VIEW_NEWS;
+  loadNews() {
+    const countViewNews = this.viewNews.length;
+    const newCountViewNews = countViewNews + this.COUNT_ADD_VIEW_NEWS;
+    const idSelectedSource = this.isUserNews ? this.ID_USER_SOURCE : this.idSelectedSource;
+    const cacheNews = CacheNews.getFromCache(idSelectedSource);
 
-    if (this.isUserNews) {
-      if (countViewNews < this.allNews.length) {
-        this.viewNews = this.allNews.slice(0, newCountVewsNews);
-      } else  {
+    if (cacheNews.length >= newCountViewNews) {
+      this.viewNews.push(...cacheNews.slice(countViewNews, newCountViewNews));
+    } else if (this.isUserNews) {
+      const userNews = DbNewsUser.getUserNews(countViewNews, this.COUNT_ADD_VIEW_NEWS);
+      if (userNews.length) {
+        this.viewNews.push(...userNews);
+      } else {
         alert('Load all news');
       }
-    } else if (this.cacheLoadedNews[this.idSelectedSource].length >= newCountVewsNews) {
-      this.viewNews = this.cacheLoadedNews[this.idSelectedSource].slice(0, newCountVewsNews);
     } else {
-      this.httpGetArticlesSource(this.idSelectedSource, newCountVewsNews);
+      this.httpGetArticlesSource(idSelectedSource, newCountViewNews);
     }
+  }
+
+  loadFilterNews(from: number) {
+    if (this.isUserNews) {
+      const filterNews = DbNewsUser.getUserNews(from, this.COUNT_ADD_VIEW_NEWS, this.wordsForFilter, this.FIELDS_FILTER);
+      if (filterNews.length && from) {
+        this.viewNews.push(...filterNews);
+      } else if (!from) {
+        this.viewNews = [...filterNews]
+      } else {
+        alert('Load all filter news by key words');
+      }
+    } else {
+      this.httpGetFilterArticlesSource(this.idSelectedSource, from + this.COUNT_ADD_VIEW_NEWS, this.wordsForFilter);
+    }
+  }
+
+  handlerClickLoad() {
+    this.wordsForFilter ? this.loadFilterNews(this.viewNews.length) : this.loadNews();
   }
 
   handlerDeleteNews(id: string) {
-    const newCountViewNews = this.viewNews.length - 1;
-    UserNewsModel.removeUserNewsById(id);
-    this.setNews(UserNewsModel.getUserNews(), newCountViewNews);
-  }
-}
+    DbNewsUser.removeUserNewsById(id);
 
+    const newCountViewNews = this.viewNews.length - 1 ? this.viewNews.length - 1 : this.COUNT_ADD_VIEW_NEWS;
+    const userNews = DbNewsUser.getUserNews(0, newCountViewNews);
+
+    CacheNews.setToCache(this.ID_USER_SOURCE, userNews);
+    this.viewNews = userNews;
+  }
+
+  handlerFilterByKeyWords(listKeyWords: Array<string>) {
+    const idSelectedSource = this.isUserNews ? this.ID_USER_SOURCE : this.idSelectedSource;
+
+    if (listKeyWords[0] && idSelectedSource) {
+      this.wordsForFilter = listKeyWords;
+      this.loadFilterNews(0);
+    } else if (idSelectedSource){
+      this.wordsForFilter = null;
+      this.setNewsBySourceId(idSelectedSource);
+    }
+  }
+
+}
 
 

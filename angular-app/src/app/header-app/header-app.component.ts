@@ -10,11 +10,13 @@ import { element } from '@angular/core/src/render3';
 export class HeaderAppComponent implements OnInit {
   public isCreatedUserNews: boolean;
   private sourceName: string;
+  private keyWords: string = '';
   private NAME_USER_NEWS: string = 'My news';
 
   @Input() sources: Array<Object>;
   @Output() idSelectedSource: EventEmitter<string> = new EventEmitter();
   @Output() createdUserNews: EventEmitter<boolean> = new EventEmitter();
+  @Output() filterByKeyWords: EventEmitter<Array<string>> = new EventEmitter();
 
   constructor() {
 
@@ -38,5 +40,16 @@ export class HeaderAppComponent implements OnInit {
       this.sourceName = '';
       this.idSelectedSource.emit('');
     }
+  }
+
+  onClickFilter() {
+      const listKeyWords = this.keyWords.trim().split(/\W+/g);
+      this.filterByKeyWords.emit(listKeyWords);
+      console.log(listKeyWords);
+
+    }
+
+  onchangeKeyWords(event) {
+    this.keyWords = event.target.value;
   }
 }
