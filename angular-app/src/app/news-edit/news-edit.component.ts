@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import DbNewsUser from '../../utils/db-news-user'
 
 @Component({
   selector: 'app-news-edit',
@@ -7,9 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NewsEditComponent implements OnInit {
 
-  constructor() { }
+  private news: Object = {};
+
+  constructor(private route: ActivatedRoute, private router: Router) {
+    this.route.params.subscribe(this.handlerRouteParams.bind(this));
+   }
 
   ngOnInit() {
   }
 
+  handlerRouteParams(params: Object) {
+    const idNews = params['id'];
+    this.news = DbNewsUser.getUserNewsById(idNews);
+  }
+
+  handleClickCancel() {
+
+  }
 }

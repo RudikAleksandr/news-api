@@ -10,6 +10,8 @@ export class NewsListComponent implements OnInit {
   @Input() newsList: Array<Object> = [];
   @Output() clickLoadButton: EventEmitter<number> = new EventEmitter();
   @Output() deleteNews: EventEmitter<string> = new EventEmitter();
+  @Output() showContent: EventEmitter<string> = new EventEmitter();
+  @Output() editContent: EventEmitter<string> = new EventEmitter();
 
   constructor() { }
 
@@ -21,8 +23,16 @@ export class NewsListComponent implements OnInit {
     this.clickLoadButton.emit();
   }
 
-  handleDeleteNews(id: string) {
+  handlerDeleteNews(id: string) {
     this.deleteNews.emit(id);
+  }
+
+  handlerShowContent(id: string) {
+    this.showContent.emit(id);
+  }
+
+  handlerEditContent(id: string) {
+    this.editContent.emit(id);
   }
 
 }

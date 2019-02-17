@@ -2,7 +2,7 @@
   <img class="news-item__photo" alt="photo news" [src]="news.urlToImage">
   <div class="news-item__info">
     <div class="d-flex justify-content-between">
-      <h2 class="news-item__name">{{news.title}}</h2>
+      <h2 class="news-item__name" (click)="handlerShowContent()">{{news.title}}</h2>
       <span class="news-item__date-time">{{news.publishedAt}}</span>
     </div>
     <p class="news-item__description">
@@ -11,7 +11,7 @@
     <a [href]="news.url" target="_blank" class="news-item__link">Read more...</a>
   </div>
   <div *ngIf="news.isUserNews" class="news-item__block-btn d-flex flex-column">
-    <button>Edit</button>
+    <button (click)="handlerEditNews()">Edit</button>
     <button (click)="handlerDeleteNews()">Delete</button>
   </div>
 </section>

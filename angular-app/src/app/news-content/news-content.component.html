@@ -1,17 +1,18 @@
 <section class="news-content d-flex justify-content-around">
   <div>
-    <div class="news-content__photo"></div>
+    <img class="news-content__photo" [src]="news.urlToImage" alt="photo news">
   </div>
   <div class="news-content__info">
-    <h1>NewsLine</h1>
+    <h1 class="news-content__title">{{news.title}}</h1>
     <p class="news-content__text">
-      Lorem ipsum dolor sit amet consectetur adipisic amet consectetur adipisicing elit. Excepturi est fugiat cupiditate officia adipisci neque illum? Accusamus quae labore nisi! Loredolor sit amet consectetur adipisicing elit. Excepturi est fugiat cupiditate officia adipisci neque illum? Accusamus quae labore nisi! Loredolor sit amet consectetur adipisicing elit. Excepturi est fugiat cupiditate officia adipisci neque illum? Accusamus quae labore nisi! Loredolor sit amet consectetur adipisicing elit. Excepturi est fugiat cupiditate officia adipisci neque illum? Accusamus quae labore nisi! Loredolor sit amet consectetur adipisicing elit. Excepturi est fugiat cupiditate officia adipisci neque illum? Accusamus quae labore nisi! Loredolor sit amet consectetur adipisicing elit. Excepturi est fugiat cupiditate officia adipisci neque illum?  est fugiat cupiditate officia adipisci neque illum? Accusamus quae labore nisi! Lorem ipsum, dolor sit am lorem50  et consectetur lorem30 adipisicing elit. Ex facilis quasi officia, voluptatem accusamus facere dolorem maxime? Est doloremque itaque enim veniam tenetur praesentium laborum, dolore iste numquam optio dolorem.
+      {{news.content}}
     </p>
-    <span class="news-content__date">Date: dd/mm/yy: time</span>
-    <span class="news-content__author">Author</span>
+    <span class="news-content__date">{{news.publishedAt}}</span>
+    <span class="news-content__author">{{news.author}}</span>
   </div>
   <div class="news-content__btn d-flex justify-content-start flex-column">
-    <button>Edit</button>
-    <button>Delete</button>
+    <button *ngIf=news.isUserNews >Edit</button>
+    <button *ngIf=news.isUserNews (click)="onClickDelete()">Delete</button>
+    <button (click)="onClickBack()">Back</button>
   </div>
 </section>

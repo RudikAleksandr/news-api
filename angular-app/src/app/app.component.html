@@ -11,11 +11,12 @@
     [newsList]="viewNews"
     (clickLoadButton)="handlerClickLoad()"
     (deleteNews)="handlerDeleteNews($event)"
+    (showContent)="handlerShowContent($event)"
+    (editContent)="handlerEditContent($event)"
   ></news-list>
-
+  <router-outlet></router-outlet>
 </main>
 <footer class="d-flex justify-content-around align-items-center">
   <span>Footer</span>
   <span>Powered by NewsAPI</span>
 </footer>
-<router-outlet></router-outlet>

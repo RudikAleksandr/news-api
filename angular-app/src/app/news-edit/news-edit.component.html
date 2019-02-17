@@ -1,11 +1,11 @@
 <section class="news-edit d-flex justify-content-around">
   <div class="news-edit__row d-flex flex-column">
-    <label>Heading</label>
-    <input type="text">
+    <label>Heading *</label>
+    <input type="text" [value]="news.title">
     <label>Short description</label>
-    <input type="text">
-    <label>Content</label>
-    <textarea class="news-edit__content"></textarea>
+    <input type="text" [value]="news.description">
+    <label>Content *</label>
+    <textarea class="news-edit__content">{{news.content}}</textarea>
   </div>
   <div class="news-edit__row d-flex flex-column">
     <div class="">
@@ -13,16 +13,16 @@
       <label class="news-edit__radio"><input type="radio" name="path-image" value="url" checked> URL</label>
       <label class="news-edit__radio"><input type="radio" name="path-image" value="ofile"> OFile</label>
     </div>
-    <input type="text">
-    <label>Date</label>
-    <input type="text">
+    <input type="text" [value]="news.urlToImage">
+    <label value>Date</label>
+    <input type="text" [value]="news.publishedAt">
     <label>Author</label>
-    <input type="text">
+    <input type="text" [value]="news.author">
     <label>Source URL</label>
-    <input type="text">
+    <input type="text" [value]="news.url">
     <div class="news-edit__btn-block d-flex justify-content-around align-items-end">
       <button>Save</button>
-      <button>Cancel</button>
+      <button (click)="handleClickCancel()">Cancel</button>
     </div>
   </div>
   </section>

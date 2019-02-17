@@ -7,9 +7,9 @@
     </div>
   </section>
   <section class="header__row2 row justify-content-center align-items-center">
-    <h1 class="header__source-name">{{isCreatedUserNews ? NAME_USER_NEWS : sourceName}}</h1>
+    <h1 class="header__source-name">{{title}}</h1>
   </section>
-  <section class="header__row3 row justify-content-between align-items-center">
+  <section class="header__row3 row justify-content-between align-items-center {{isShowNav ? '' : 'd-none'}}">
     <select
       name="source"
       id="source"

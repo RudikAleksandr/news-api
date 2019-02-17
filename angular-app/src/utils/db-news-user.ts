@@ -11,9 +11,28 @@ export default class DbNewsUser {
     return newsList.slice(from, from + count || newsList.length);
   }
 
+  static getUserNewsById(id: string) {
+    const length = userNews.length;
+    for (let i = 0; i < length; i++) {
+      if (userNews[i].id === id) {
+        return userNews[i];
+      }
+    }
+  }
+
+  static setIdNews(news: Array<Object> ) {
+    return news.map((item) => {
+      const id = item['publishedAt'].replace(/-|:/g, '');
+      return {...item, id};
+    })
+
+
+  }
+
   static removeUserNewsById(id: string): void {
-    for (let i = 0; i < userNews.length; i++) {
-      if (userNews[i].publishedAt === id) {
+    const length = userNews.length;
+    for (let i = 0; i < length; i++) {
+      if (userNews[i].id === id) {
         userNews.splice(i, 1);
         break;
       }
