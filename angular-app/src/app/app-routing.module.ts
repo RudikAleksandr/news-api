@@ -8,7 +8,7 @@ const routes: Routes = [
   {path: '', component: NewsListComponent},
   {path: 'content/:source/:id', component: NewsContentComponent},
   {path: 'edit/:id', component: NewsEditComponent},
-  {path: 'add/:id', component: NewsEditComponent},
+  {path: 'add', component: NewsEditComponent},
 ];
   NewsListComponent
 @NgModule({

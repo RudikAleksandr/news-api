@@ -37,6 +37,10 @@ export class NewsContentComponent implements OnInit {
     this.router.navigate(['']);
   }
 
+  onClickEdit() {
+    this.router.navigate([`/${config.ROUTE_EDIT}`, this.news['id']]);
+  }
+
   onClickDelete() {
     const id = this.news['id'];
     CacheNews.removeFromCacheById(config.ID_USER_SOURCE, id);

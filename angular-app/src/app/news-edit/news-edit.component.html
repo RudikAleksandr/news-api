@@ -1,11 +1,11 @@
 <section class="news-edit d-flex justify-content-around">
   <div class="news-edit__row d-flex flex-column">
     <label>Heading *</label>
-    <input type="text" [value]="news.title">
+    <input type="text" [value]="news.title" (input)="onInputTitle($event)">
     <label>Short description</label>
-    <input type="text" [value]="news.description">
+    <input type="text" [value]="news.description" (input)="onInputDescription($event)">
     <label>Content *</label>
-    <textarea class="news-edit__content">{{news.content}}</textarea>
+    <textarea class="news-edit__content" (input)="onInputContent($event)">{{news.content}}</textarea>
   </div>
   <div class="news-edit__row d-flex flex-column">
     <div class="">
@@ -13,16 +13,16 @@
       <label class="news-edit__radio"><input type="radio" name="path-image" value="url" checked> URL</label>
       <label class="news-edit__radio"><input type="radio" name="path-image" value="ofile"> OFile</label>
     </div>
-    <input type="text" [value]="news.urlToImage">
+    <input type="text" [value]="news.urlToImage" (input)="onInputUrlToImage($event)">
     <label value>Date</label>
-    <input type="text" [value]="news.publishedAt">
+    <input type="text" [value]="news.publishedAt" (input)="onInputPublishedAt($event)">
     <label>Author</label>
-    <input type="text" [value]="news.author">
+    <input type="text" [value]="news.author" (input)="onInputAuthor($event)">
     <label>Source URL</label>
-    <input type="text" [value]="news.url">
+    <input type="text" [value]="news.url" (input)="onInputUrl($event)">
     <div class="news-edit__btn-block d-flex justify-content-around align-items-end">
-      <button>Save</button>
-      <button (click)="handleClickCancel()">Cancel</button>
+      <button (click)="onClickSave()" [disabled]="isDisabledSave">Save</button>
+      <button (click)="onClickCancel()">Cancel</button>
     </div>
   </div>
   </section>

@@ -11,7 +11,7 @@
     <span class="news-content__author">{{news.author}}</span>
   </div>
   <div class="news-content__btn d-flex justify-content-start flex-column">
-    <button *ngIf=news.isUserNews >Edit</button>
+    <button *ngIf=news.isUserNews (click)="onClickEdit()">Edit</button>
     <button *ngIf=news.isUserNews (click)="onClickDelete()">Delete</button>
     <button (click)="onClickBack()">Back</button>
   </div>

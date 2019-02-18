@@ -36,7 +36,7 @@ export class AppComponent {
 
   httpGetArticlesSource(idSelectedSource: string, countNews: number = this.COUNT_ADD_VIEW_NEWS) {
     NewsAPIUtil.httpGetArticlesSource(idSelectedSource, countNews).then(({articles}) => {
-      const articlesWithId = DbNewsUser.setIdNews(articles);
+      const articlesWithId = DbNewsUser.setIdForNewsAPI(articles);
       CacheNews.setToCache(idSelectedSource, articlesWithId);
       this.viewNews = articlesWithId;
     });
@@ -45,7 +45,7 @@ export class AppComponent {
   httpGetFilterArticlesSource(idSelectedSource: string, countNews: number = this.COUNT_ADD_VIEW_NEWS, wordsForFilter: Array<Object>) {
     const filter = wordsForFilter.join(' ');
     NewsAPIUtil.httpGetArticlesSource(idSelectedSource, countNews, filter).then(({articles}) => {
-      this.viewNews = DbNewsUser.setIdNews(articles);
+      this.viewNews = DbNewsUser.setIdForNewsAPI(articles);
     });
   }
 
@@ -157,6 +157,10 @@ export class AppComponent {
 
   handlerEditContent(id: String) {
     this.setRouterNavigate([`/${config.ROUTE_EDIT}`, id]);
+  }
+
+  handlerAddArticle() {
+    this.setRouterNavigate([`/${config.ROUTE_ADD}`]);
   }
 
   handlerRouterEvents(val: Object) {

@@ -2,6 +2,9 @@
   padding-right: 15px;
 }
 
+.news-item__info {
+  min-width: 70%;
+}
 .news-item__photo {
   background-color: #aaa;
   width: 150px;

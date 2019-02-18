@@ -19,13 +19,13 @@ export class HeaderAppComponent implements OnInit {
   @Output() idSelectedSource: EventEmitter<string> = new EventEmitter();
   @Output() createdUserNews: EventEmitter<boolean> = new EventEmitter();
   @Output() filterByKeyWords: EventEmitter<Array<string>> = new EventEmitter();
+  @Output() addArticle: EventEmitter<Array<string>> = new EventEmitter();
 
   constructor(private route: ActivatedRoute, private router: Router) {
     this.router.events.subscribe(this.handlerRouterEvents.bind(this));
   }
 
   ngOnInit() {
-    console.log(1);
   }
 
   onChangeCreatedMe() {
@@ -54,24 +54,31 @@ export class HeaderAppComponent implements OnInit {
   }
 
   onClickFilter() {
-      const listKeyWords = this.keyWords.trim().split(/\W+/g);
-      this.filterByKeyWords.emit(listKeyWords);
-    }
+    const listKeyWords = this.keyWords.trim().split(/\W+/g);
+    this.filterByKeyWords.emit(listKeyWords);
+  }
 
   onchangeKeyWords(event) {
     this.keyWords = event.target.value;
   }
 
+  onClickAdd() {
+    this.addArticle.emit();
+  }
+
   handlerRouterEvents(val: Object) {
     if (val instanceof NavigationEnd) {
       const url = val.url.split('/')[1];
-      console.log(url);
       if (url === config.ROUTE_EDIT) {
         this.title = 'Edit';
         this.isShowNav = false;
       } else if (url === config.ROUTE_CONTENT) {
         this.isShowNav = false;
+      } else if (url === config.ROUTE_ADD) {
+        this.title = 'Add';
+        this.isShowNav = false;
       } else {
+        this.title = this.isCreatedUserNews ? config.NAME_USER_NEWS : '';
         this.isShowNav = true;
       }
     }
