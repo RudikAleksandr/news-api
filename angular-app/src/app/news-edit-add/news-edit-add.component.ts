@@ -6,10 +6,10 @@ import config from '../../config';
 
 @Component({
   selector: 'app-news-edit',
-  templateUrl: './news-edit.component.html',
-  styleUrls: ['./news-edit.component.css']
+  templateUrl: './news-edit-add.component.html',
+  styleUrls: ['./news-edit-add.component.css']
 })
-export class NewsEditComponent implements OnInit {
+export class NewsEditAddComponent implements OnInit {
   private isDisabledSave: boolean = false;
   private isAdd: boolean = false;
   private news: Object = {

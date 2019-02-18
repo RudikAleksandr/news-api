@@ -8,7 +8,7 @@ import { HeaderAppComponent } from './header-app/header-app.component';
 import { NewsItemComponent } from './news-item/news-item.component';
 import { NewsListComponent } from './news-list/news-list.component';
 import { NewsContentComponent } from './news-content/news-content.component';
-import { NewsEditComponent } from './news-edit/news-edit.component';
+import { NewsEditAddComponent } from './news-edit-add/news-edit-add.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +17,7 @@ import { NewsEditComponent } from './news-edit/news-edit.component';
     NewsItemComponent,
     NewsListComponent,
     NewsContentComponent,
-    NewsEditComponent
+    NewsEditAddComponent
   ],
   imports: [
     BrowserModule,
