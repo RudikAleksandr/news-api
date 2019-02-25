@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import NewsAPIUtil from '../utils/news-api';
 import DbNewsUser from '../utils/db-news-user';
-import CacheNews from '../utils/cache-news';
 import config from '../config';
+import { NewsService } from './services/news/news.service';
 
 @Component({
   selector: 'app-root',
@@ -20,8 +20,15 @@ export class AppComponent {
   private ID_USER_SOURCE: string = config.ID_USER_SOURCE;
   private FIELDS_FILTER = ['author', 'description', 'title'];
 
-  constructor(private route: ActivatedRoute, private router: Router) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private newsService: NewsService,
+  ) {
     this.router.events.subscribe(this.handlerRouterEvents.bind(this));
+    this.newsService.editNewsEvent.subscribe(this.handlerEditContent.bind(this));
+    this.newsService.showNewsEvent.subscribe(this.handlerShowContent.bind(this));
+    this.newsService.deleteNewsEvent.subscribe(this.handlerDeleteNews.bind(this));
   }
 
   ngOnInit() {
@@ -37,7 +44,7 @@ export class AppComponent {
   httpGetArticlesSource(idSelectedSource: string, countNews: number = this.COUNT_ADD_VIEW_NEWS) {
     NewsAPIUtil.httpGetArticlesSource(idSelectedSource, countNews).then(({articles}) => {
       const articlesWithId = DbNewsUser.setIdForNewsAPI(articles);
-      CacheNews.setToCache(idSelectedSource, articlesWithId);
+      this.newsService.setToCache(idSelectedSource, articlesWithId);
       this.viewNews = articlesWithId;
     });
   }
@@ -51,13 +58,13 @@ export class AppComponent {
 
 
   setNewsBySourceId(idSelectedSource: string) {
-    const cacheNews = CacheNews.getFromCache(idSelectedSource);
+    const cacheNews = this.newsService.getFromCache(idSelectedSource);
 
     if (cacheNews && cacheNews.length >= this.COUNT_ADD_VIEW_NEWS) {
       this.viewNews = [...cacheNews.slice(0, this.COUNT_ADD_VIEW_NEWS)];
     } else if (idSelectedSource === this.ID_USER_SOURCE) {
       const userNews = DbNewsUser.getUserNews(0, this.COUNT_ADD_VIEW_NEWS);
-      CacheNews.setToCache(this.ID_USER_SOURCE, userNews);
+      this.newsService.setToCache(this.ID_USER_SOURCE, userNews);
       this.viewNews = [...userNews];
     } else {
       this.httpGetArticlesSource(idSelectedSource);
@@ -72,7 +79,7 @@ export class AppComponent {
     const countViewNews = this.viewNews.length;
     const newCountViewNews = countViewNews + this.COUNT_ADD_VIEW_NEWS;
     const idSelectedSource = this.getIdSelectedSource();
-    const cacheNews = CacheNews.getFromCache(idSelectedSource);
+    const cacheNews = this.newsService.getFromCache(idSelectedSource);
 
     if (cacheNews.length >= newCountViewNews) {
       this.viewNews.push(...cacheNews.slice(countViewNews, newCountViewNews));
@@ -130,7 +137,7 @@ export class AppComponent {
 
   handlerDeleteNews(id: string) {
     DbNewsUser.removeUserNewsById(id);
-    CacheNews.removeFromCacheById(this.ID_USER_SOURCE, id);
+    this.newsService.removeFromCacheById(this.ID_USER_SOURCE, id);
     this.setNewsBySourceId(this.ID_USER_SOURCE);
   }
 

@@ -9,6 +9,7 @@ import { NewsItemComponent } from './news-item/news-item.component';
 import { NewsListComponent } from './news-list/news-list.component';
 import { NewsContentComponent } from './news-content/news-content.component';
 import { NewsEditAddComponent } from './news-edit-add/news-edit-add.component';
+import { NewsService } from './services/news/news.service';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,9 @@ import { NewsEditAddComponent } from './news-edit-add/news-edit-add.component';
     AppRoutingModule,
     NgbModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    NewsService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

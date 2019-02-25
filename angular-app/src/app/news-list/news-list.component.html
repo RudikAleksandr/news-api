@@ -2,9 +2,6 @@
   <news-item
     *ngFor="let news of newsList"
     [news]="news"
-    (deleteNews)="handlerDeleteNews($event)"
-    (showContent)="handlerShowContent($event)"
-    (editContent)="handlerEditContent($event)"
     class="news-list__item"
   ></news-item>
   <button

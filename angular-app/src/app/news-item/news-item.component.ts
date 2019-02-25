@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output } from '@angular/core';
 import { EventEmitter } from '@angular/core';
+import { NewsService } from '../services/news/news.service';
 
 @Component({
   selector: 'news-item',
@@ -8,23 +9,22 @@ import { EventEmitter } from '@angular/core';
 })
 export class NewsItemComponent implements OnInit {
   @Input() news: Object;
-  @Output() deleteNews: EventEmitter<any> = new EventEmitter();
-  @Output() showContent: EventEmitter<any> = new EventEmitter();
-  @Output() editContent: EventEmitter<any> = new EventEmitter();
 
-  constructor() { }
+  constructor(private newsService: NewsService) {
+
+  }
   ngOnInit() { }
 
   handlerShowContent() {
-    this.showContent.emit(this.news['id']);
+    this.newsService.showNews(this.news['id']);
   }
 
   handlerDeleteNews() {
-    this.deleteNews.emit(this.news['id']);
+    this.newsService.deleteNews(this.news['id']);
   }
 
   handlerEditNews() {
-    this.editContent.emit(this.news['id']);
+    this.newsService.editNews(this.news['id']);
   }
 
 }

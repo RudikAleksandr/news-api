@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import DbNewsUser from '../../utils/db-news-user';
-import CacheNews from '../../utils/cache-news';
 import config from '../../config';
+import { NewsService } from '../services/news/news.service';
 
 @Component({
   selector: 'app-news-edit',
@@ -23,7 +23,11 @@ export class NewsEditAddComponent implements OnInit {
     isUserNews: true,
   };
 
-  constructor(private route: ActivatedRoute, private router: Router) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private newsService: NewsService,
+  ) {
     this.route.params.subscribe(this.handlerRouteParams.bind(this));
    }
 
@@ -75,7 +79,7 @@ export class NewsEditAddComponent implements OnInit {
       DbNewsUser.addNews(news);
     } else {
       DbNewsUser.editNews(news);
-      CacheNews.editToCacheById(config.ID_USER_SOURCE, news);
+      this.newsService.editToCacheById(config.ID_USER_SOURCE, news);
     }
 
     this.router.navigate(['']);

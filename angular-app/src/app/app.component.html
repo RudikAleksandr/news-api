@@ -11,9 +11,6 @@
     class="row"
     [newsList]="viewNews"
     (clickLoadButton)="handlerClickLoad()"
-    (deleteNews)="handlerDeleteNews($event)"
-    (showContent)="handlerShowContent($event)"
-    (editContent)="handlerEditContent($event)"
   ></news-list>
   <router-outlet></router-outlet>
 </main>
