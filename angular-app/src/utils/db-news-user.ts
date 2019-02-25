@@ -1,14 +1,14 @@
 import userNews from '../db/user-news';
+import { IArticle } from '../interfaces';
 
 let numberId = userNews.length;
 
 export default class DbNewsUser {
-  static getUserNews(from: number = 0, count: number = null): Array<Object> {
-    let newsList = userNews;
-    return newsList.slice(from, from + count || newsList.length);
+  static getUserNews(from: number = 0, count: number = null): Array<IArticle> {
+    return userNews.slice(from, from + count || userNews.length);
   }
 
-  static getUserNewsById(id: string): Object {
+  static getUserNewsById(id: string): IArticle {
     const length = userNews.length;
     for (let i = 0; i < length; i++) {
       if (userNews[i].id === id) {
@@ -17,9 +17,9 @@ export default class DbNewsUser {
     }
   }
 
-  static setIdForNewsAPI(news: Array<Object> ): Array<Object> {
+  static setIdForNewsAPI(news: Array<IArticle> ): Array<IArticle> {
     return news.map((item) => {
-      const id = item['publishedAt'].replace(/-|:/g, '');
+      const id = item.publishedAt.replace(/-|:/g, '');
       return {...item, id};
     })
   }

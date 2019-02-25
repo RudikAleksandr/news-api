@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
-import NewsAPIUtil from '../utils/news-api';
 import DbNewsUser from '../utils/db-news-user';
 import config from '../config';
 import { NewsService } from './services/news/news.service';
+import { NewsApiService } from './services/news-api/news-api.service';
+import { IArticle } from '../interfaces';
 
 @Component({
   selector: 'app-root',
@@ -11,17 +12,18 @@ import { NewsService } from './services/news/news.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  public sourcesNews: Array<Object>;
-  public viewNews: Array<Object> =  [];
+  public sourcesNews: Array<object>;
+  public viewNews: Array<IArticle> = [];
   private idSelectedSource: string;
-  private isUserNews: boolean = false;
-  private COUNT_ADD_VIEW_NEWS: number = 5;
+  private isUserNews: boolean;
+  private COUNT_ADD_VIEW_NEWS = 5;
   private ID_USER_SOURCE: string = config.ID_USER_SOURCE;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private newsService: NewsService,
+    private newsApiService: NewsApiService,
   ) {
     this.router.events.subscribe(this.handlerRouterEvents.bind(this));
     this.newsService.editNewsEvent.subscribe(this.handlerEditContent.bind(this));
@@ -34,25 +36,18 @@ export class AppComponent {
   }
 
   initSourcesNews() {
-     NewsAPIUtil.httpGetAllSources().then((data) => {
-       this.sourcesNews = data.sources;
-     });
+    this.newsApiService.httpGetAllSources().subscribe((data: Array<object>) => {
+      this.sourcesNews = data;
+    })
   }
 
   httpGetArticlesSource(idSelectedSource: string, countNews: number = this.COUNT_ADD_VIEW_NEWS) {
-    NewsAPIUtil.httpGetArticlesSource(idSelectedSource, countNews).then(({articles}) => {
+    this.newsApiService.httpGetArticlesSource(idSelectedSource, countNews).subscribe((articles: Array<IArticle>) => {
       const articlesWithId = DbNewsUser.setIdForNewsAPI(articles);
       this.newsService.setToCache(idSelectedSource, articlesWithId);
       this.viewNews = articlesWithId;
     });
   }
-
-  httpGetFilterArticlesSource(idSelectedSource: string, countNews: number = this.COUNT_ADD_VIEW_NEWS) {
-    NewsAPIUtil.httpGetArticlesSource(idSelectedSource, countNews).then(({articles}) => {
-      this.viewNews = DbNewsUser.setIdForNewsAPI(articles);
-    });
-  }
-
 
   setNewsBySourceId(idSelectedSource: string) {
     const cacheNews = this.newsService.getFromCache(idSelectedSource);
@@ -83,7 +78,7 @@ export class AppComponent {
     } else if (this.isUserNews) {
       const userNews = DbNewsUser.getUserNews(countViewNews, this.COUNT_ADD_VIEW_NEWS);
       if (userNews.length) {
-        this.viewNews.push(...userNews);
+        this.viewNews = [...this.viewNews, ...userNews];
       } else {
         alert('Load all news');
       }
@@ -132,7 +127,7 @@ export class AppComponent {
     this.setRouterNavigate([`/${config.ROUTE_CONTENT}`, this.getIdSelectedSource(), id]);
   }
 
-  handlerEditContent(id: String) {
+  handlerEditContent(id: string) {
     this.setRouterNavigate([`/${config.ROUTE_EDIT}`, id]);
   }
 
@@ -140,7 +135,7 @@ export class AppComponent {
     this.setRouterNavigate([`/${config.ROUTE_ADD}`]);
   }
 
-  handlerRouterEvents(val: Object) {
+  handlerRouterEvents(val: object) {
     const idSelectedSource = this.getIdSelectedSource();
     if (val instanceof NavigationEnd && val.url === '/' && idSelectedSource) {
       this.setNewsBySourceId(idSelectedSource);

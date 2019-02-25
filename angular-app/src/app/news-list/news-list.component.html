@@ -1,9 +1,9 @@
 <section class="news-list d-flex flex-column align-items-center">
-  <news-item
+  <app-news-item
     *ngFor="let news of newsList | filter: wordsFilter"
     [news]="news"
     class="news-list__item"
-  ></news-item>
+  ></app-news-item>
   <button
     *ngIf="newsList.length"
     (click)="handlerClickLoadButton()"

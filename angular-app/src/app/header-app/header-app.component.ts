@@ -3,9 +3,8 @@ import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { EventEmitter } from '@angular/core';
 import config from '../../config';
 import { NewsService } from '../services/news/news.service';
-
 @Component({
-  selector: 'header-app',
+  selector: 'app-header',
   templateUrl: './header-app.component.html',
   styleUrls: ['./header-app.component.css']
 })
@@ -16,10 +15,9 @@ export class HeaderAppComponent implements OnInit {
   private keyWords: string = '';
   private isShowNav: boolean = true;
 
-  @Input() sources: Array<Object>;
+  @Input() sources: Array<object>;
   @Output() idSelectedSource: EventEmitter<string> = new EventEmitter();
   @Output() createdUserNews: EventEmitter<boolean> = new EventEmitter();
-  @Output() filterByKeyWords: EventEmitter<Array<string>> = new EventEmitter();
   @Output() addArticle: EventEmitter<Array<string>> = new EventEmitter();
 
   constructor(
@@ -70,7 +68,7 @@ export class HeaderAppComponent implements OnInit {
     this.addArticle.emit();
   }
 
-  handlerRouterEvents(val: Object) {
+  handlerRouterEvents(val: object) {
     if (val instanceof NavigationEnd) {
       const url = val.url.split('/')[1];
       if (url === config.ROUTE_EDIT) {

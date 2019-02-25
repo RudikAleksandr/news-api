@@ -10,7 +10,6 @@ const routes: Routes = [
   {path: 'edit/:id', component: NewsEditAddComponent},
   {path: 'add', component: NewsEditAddComponent},
 ];
-  NewsListComponent
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]

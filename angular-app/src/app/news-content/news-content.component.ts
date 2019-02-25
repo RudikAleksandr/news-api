@@ -3,14 +3,22 @@ import { ActivatedRoute, Router } from '@angular/router';
 import DbNewsUser from '../../utils/db-news-user';
 import config from '../../config';
 import { NewsService } from '../services/news/news.service';
-
+import { IArticle } from '../../interfaces';
 @Component({
-  selector: 'news-content',
+  selector: 'app-news-content',
   templateUrl: './news-content.component.html',
   styleUrls: ['./news-content.component.css']
 })
 export class NewsContentComponent implements OnInit {
-  public news: Object = {};
+  public news: IArticle = {
+    author: '',
+    content: '',
+    description: '',
+    publishedAt: '',
+    title: '',
+    url: '',
+    urlToImage: '',
+  };
   public title: string;
 
   constructor(
@@ -23,10 +31,10 @@ export class NewsContentComponent implements OnInit {
 
   ngOnInit() { }
 
-  handlerRouteParams(params: Object) {
+  handlerRouteParams(params: object) {
     const idNews = params['id'];
     const idSource = params['source'];
-    let news: Object;
+    let news: IArticle;
 
     if (idSource === config.ID_USER_SOURCE) {
       news = DbNewsUser.getUserNewsById(idNews);

@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import DbNewsUser from '../../utils/db-news-user';
 import config from '../../config';
 import { NewsService } from '../services/news/news.service';
-
+import { IArticle } from '../../interfaces';
 @Component({
   selector: 'app-news-edit',
   templateUrl: './news-edit-add.component.html',
@@ -12,7 +12,7 @@ import { NewsService } from '../services/news/news.service';
 export class NewsEditAddComponent implements OnInit {
   private isDisabledSave: boolean = false;
   private isAdd: boolean = false;
-  private news: Object = {
+  private news: IArticle = {
     author: '',
     content: '',
     description: '',
@@ -89,7 +89,7 @@ export class NewsEditAddComponent implements OnInit {
     this.router.navigate(['']);
   }
 
-  handlerRouteParams(params: Object) {
+  handlerRouteParams(params: object) {
     const idNews = params['id'];
     if (idNews) {
       const news = DbNewsUser.getUserNewsById(idNews);

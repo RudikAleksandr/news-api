@@ -1,4 +1,6 @@
-export default [
+import { IArticle } from '../interfaces';
+
+const userNews: Array<IArticle> = [
   {
     author: 'Lily Nothling',
     content: 'osted February 15, 2019 07:50:15 An Australian Army soldier has been charged with raping a 16-year-old girl at the Gallipoli Barracks at Enoggera in Brisbane. Police alleged the girl was smuggled past security in the boot of a car on January 14. The A',
@@ -120,4 +122,6 @@ export default [
     url: "https://apnews.com/7aa798a8d0f5420a84dfcbc23a09c401",
     isUserNews: true,
   },
-]
+];
+
+export default userNews;

@@ -1,16 +1,16 @@
-<header-app
+<app-header
   [sources]="sourcesNews"
   (idSelectedSource)="handlerSelectedSource($event)"
   (createdUserNews)="handlerCreatedUserNews($event)"
   (addArticle)="handlerAddArticle($event)"
 >
-</header-app>
+</app-header>
 <main class="container">
-  <news-list
+  <app-news-list
     class="row"
     [newsList]="viewNews"
     (clickLoadButton)="handlerClickLoad()"
-  ></news-list>
+  ></app-news-list>
   <router-outlet></router-outlet>
 </main>
 <footer class="d-flex justify-content-around align-items-center">

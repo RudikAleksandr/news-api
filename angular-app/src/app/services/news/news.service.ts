@@ -1,6 +1,6 @@
 import { EventEmitter } from '@angular/core';
 import { Injectable } from '@angular/core';
-
+import { IArticle } from '../../../interfaces';
 @Injectable({
   providedIn: 'root'
 })
@@ -9,7 +9,7 @@ export class NewsService {
   public editNewsEvent: EventEmitter<string> = new EventEmitter();
   public deleteNewsEvent: EventEmitter<string> = new EventEmitter();
   public wordsFilterEvent: EventEmitter<string> = new EventEmitter();
-  private cache: Object = {};
+  private cache: object = {};
 
   constructor() { }
 
@@ -33,11 +33,11 @@ export class NewsService {
     this.cache[key] = [...data];
   }
 
-  getFromCache(key: string): Array<Object> {
+  getFromCache(key: string): Array<IArticle> {
     return this.cache[key];
   }
 
-  getFromCacheById(key: string, id: string): Object {
+  getFromCacheById(key: string, id: string): IArticle {
     const data = this.cache[key];
     const length = data.length;
     for (let i = 0; i < length; i++) {
@@ -47,10 +47,10 @@ export class NewsService {
     }
   }
 
-  editToCacheById(key: string, newsForEdit: Object): void {
+  editToCacheById(key: string, newsForEdit: IArticle): void {
     const news = this.cache[key];
     if (news) {
-      const id = newsForEdit['id'];
+      const id = newsForEdit.id;
       const length = this.cache[key].length;
       for (let i = 0; i < length; i++) {
         if (news[i].id === id) {
