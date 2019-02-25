@@ -3,13 +3,8 @@ import userNews from '../db/user-news';
 let numberId = userNews.length;
 
 export default class DbNewsUser {
-  static getUserNews(from: number = 0, count: number = null, wordsFilter: Array<string> = null, fieldsFilter: Array<string> = null): Array<Object> {
+  static getUserNews(from: number = 0, count: number = null): Array<Object> {
     let newsList = userNews;
-
-    if (wordsFilter) {
-      newsList = this.filterUserNews(newsList, wordsFilter, fieldsFilter);
-    }
-
     return newsList.slice(from, from + count || newsList.length);
   }
 
@@ -48,25 +43,6 @@ export default class DbNewsUser {
         break;
       }
     }
-  }
-
-  static filterUserNews(newsList: Array<any>, filterWords: Array<string>, fieldsFilter: Array<string>): Array<any> {
-    const filterWordsLowerCase = [];
-
-    filterWords.forEach((word) => {
-      filterWordsLowerCase.push(word.toLocaleLowerCase());
-    })
-
-    return newsList.filter((news) => {
-      return fieldsFilter.some((field) => {
-        if (news[field]) {
-          const wordsField = news[field].trim().split(/\W+/g);
-          return wordsField.some((keyWord) => {
-            return filterWordsLowerCase.includes(keyWord.toLocaleLowerCase());
-          })
-        }
-      });
-    });
   }
 
   static addNews(news: any): void {

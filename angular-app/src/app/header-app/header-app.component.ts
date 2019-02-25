@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { EventEmitter } from '@angular/core';
 import config from '../../config';
+import { NewsService } from '../services/news/news.service';
 
 @Component({
   selector: 'header-app',
@@ -21,7 +22,11 @@ export class HeaderAppComponent implements OnInit {
   @Output() filterByKeyWords: EventEmitter<Array<string>> = new EventEmitter();
   @Output() addArticle: EventEmitter<Array<string>> = new EventEmitter();
 
-  constructor(private route: ActivatedRoute, private router: Router) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private newsService: NewsService,
+  ) {
     this.router.events.subscribe(this.handlerRouterEvents.bind(this));
   }
 
@@ -54,8 +59,7 @@ export class HeaderAppComponent implements OnInit {
   }
 
   onClickFilter() {
-    const listKeyWords = this.keyWords.trim().split(/\W+/g);
-    this.filterByKeyWords.emit(listKeyWords);
+    this.newsService.wordsFilter(this.keyWords);
   }
 
   onchangeKeyWords(event) {

@@ -10,6 +10,7 @@ import { NewsListComponent } from './news-list/news-list.component';
 import { NewsContentComponent } from './news-content/news-content.component';
 import { NewsEditAddComponent } from './news-edit-add/news-edit-add.component';
 import { NewsService } from './services/news/news.service';
+import { FilterPipe } from './pipes/filter/filter.pipe';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { NewsService } from './services/news/news.service';
     NewsItemComponent,
     NewsListComponent,
     NewsContentComponent,
-    NewsEditAddComponent
+    NewsEditAddComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,

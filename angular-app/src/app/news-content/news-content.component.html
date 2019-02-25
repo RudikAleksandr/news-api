@@ -7,7 +7,7 @@
     <p class="news-content__text">
       {{news.content}}
     </p>
-    <span class="news-content__date">{{news.publishedAt}}</span>
+    <span class="news-content__date">{{news.publishedAt | date:'medium'}}</span>
     <span class="news-content__author">{{news.author}}</span>
   </div>
   <div class="news-content__btn d-flex justify-content-start flex-column">

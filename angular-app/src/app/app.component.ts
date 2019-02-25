@@ -15,10 +15,8 @@ export class AppComponent {
   public viewNews: Array<Object> =  [];
   private idSelectedSource: string;
   private isUserNews: boolean = false;
-  private wordsForFilter: Array<string> = null;
   private COUNT_ADD_VIEW_NEWS: number = 5;
   private ID_USER_SOURCE: string = config.ID_USER_SOURCE;
-  private FIELDS_FILTER = ['author', 'description', 'title'];
 
   constructor(
     private route: ActivatedRoute,
@@ -49,9 +47,8 @@ export class AppComponent {
     });
   }
 
-  httpGetFilterArticlesSource(idSelectedSource: string, countNews: number = this.COUNT_ADD_VIEW_NEWS, wordsForFilter: Array<Object>) {
-    const filter = wordsForFilter.join(' ');
-    NewsAPIUtil.httpGetArticlesSource(idSelectedSource, countNews, filter).then(({articles}) => {
+  httpGetFilterArticlesSource(idSelectedSource: string, countNews: number = this.COUNT_ADD_VIEW_NEWS) {
+    NewsAPIUtil.httpGetArticlesSource(idSelectedSource, countNews).then(({articles}) => {
       this.viewNews = DbNewsUser.setIdForNewsAPI(articles);
     });
   }
@@ -95,21 +92,6 @@ export class AppComponent {
     }
   }
 
-  loadFilterNews(from: number) {
-    if (this.isUserNews) {
-      const filterNews = DbNewsUser.getUserNews(from, this.COUNT_ADD_VIEW_NEWS, this.wordsForFilter, this.FIELDS_FILTER);
-      if (filterNews.length && from) {
-        this.viewNews.push(...filterNews);
-      } else if (!from) {
-        this.viewNews = [...filterNews]
-      } else {
-        alert('Load all filter news by key words');
-      }
-    } else {
-      this.httpGetFilterArticlesSource(this.idSelectedSource, from + this.COUNT_ADD_VIEW_NEWS, this.wordsForFilter);
-    }
-  }
-
   handlerSelectedSource(idSelectedSource: string) {
     if (idSelectedSource) {
       this.idSelectedSource = idSelectedSource;
@@ -132,25 +114,13 @@ export class AppComponent {
   }
 
   handlerClickLoad() {
-    this.wordsForFilter ? this.loadFilterNews(this.viewNews.length) : this.loadNews();
+    this.loadNews();
   }
 
   handlerDeleteNews(id: string) {
     DbNewsUser.removeUserNewsById(id);
     this.newsService.removeFromCacheById(this.ID_USER_SOURCE, id);
     this.setNewsBySourceId(this.ID_USER_SOURCE);
-  }
-
-  handlerFilterByKeyWords(listKeyWords: Array<string>) {
-    const idSelectedSource = this.getIdSelectedSource();
-
-    if (listKeyWords[0] && idSelectedSource) {
-      this.wordsForFilter = listKeyWords;
-      this.loadFilterNews(0);
-    } else if (idSelectedSource){
-      this.wordsForFilter = null;
-      this.setNewsBySourceId(idSelectedSource);
-    }
   }
 
   setRouterNavigate(configRouter) {
@@ -173,14 +143,9 @@ export class AppComponent {
   handlerRouterEvents(val: Object) {
     const idSelectedSource = this.getIdSelectedSource();
     if (val instanceof NavigationEnd && val.url === '/' && idSelectedSource) {
-      if (this.wordsForFilter) {
-        this.loadFilterNews(0);
-      } else {
-        this.setNewsBySourceId(idSelectedSource);
-      }
+      this.setNewsBySourceId(idSelectedSource);
     }
   }
-
 }
 
 

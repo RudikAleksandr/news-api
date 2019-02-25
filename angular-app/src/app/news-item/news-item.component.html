@@ -3,7 +3,7 @@
   <div class="news-item__info">
     <div class="d-flex justify-content-between">
       <h2 class="news-item__name" (click)="handlerShowContent()">{{news.title}}</h2>
-      <span class="news-item__date-time">{{news.publishedAt}}</span>
+      <span class="news-item__date-time">{{news.publishedAt | date:'medium'}}</span>
     </div>
     <p class="news-item__description">
       {{news.description}}

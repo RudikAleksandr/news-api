@@ -21,8 +21,8 @@ export default class NewsApi {
     return responce.json();
   }
 
-  static async httpGetArticlesSource(idSource: string, numberArticles: number = 5, filter: string = null) {
-    const queryURL = `${config.URL_SOURCE}/?sources=${idSource}&pageSize=${numberArticles}${filter ? '&q=' + filter : ''}`;
+  static async httpGetArticlesSource(idSource: string, numberArticles: number = 5) {
+    const queryURL = `${config.URL_SOURCE}/?sources=${idSource}&pageSize=${numberArticles}`;
     const responce = await fetch(queryURL, this.requestOptions);
 
     if (responce.status !== 200) {

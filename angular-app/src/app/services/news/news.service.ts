@@ -8,6 +8,7 @@ export class NewsService {
   public showNewsEvent: EventEmitter<string> = new EventEmitter();
   public editNewsEvent: EventEmitter<string> = new EventEmitter();
   public deleteNewsEvent: EventEmitter<string> = new EventEmitter();
+  public wordsFilterEvent: EventEmitter<string> = new EventEmitter();
   private cache: Object = {};
 
   constructor() { }
@@ -22,6 +23,10 @@ export class NewsService {
 
   deleteNews(id: string) {
     this.deleteNewsEvent.emit(id);
+  }
+
+  wordsFilter(words: string) {
+    this.wordsFilterEvent.emit(words);
   }
 
   setToCache(key: string, data: Array<any>): void {

@@ -15,7 +15,7 @@
     </div>
     <input type="text" [value]="news.urlToImage" (input)="onInputUrlToImage($event)">
     <label value>Date</label>
-    <input type="text" [value]="news.publishedAt" (input)="onInputPublishedAt($event)">
+    <input type="text" [value]="news.publishedAt | date:'medium'" (input)="onInputPublishedAt($event)">
     <label>Author</label>
     <input type="text" [value]="news.author" (input)="onInputAuthor($event)">
     <label>Source URL</label>
