@@ -32,7 +32,8 @@
   height: 100%;
 }
 
-.news-edit__btn-block button {
+.news-edit__btn-block button,
+input[type="submit"] {
   width: 120px;
   height: 40px;
 }

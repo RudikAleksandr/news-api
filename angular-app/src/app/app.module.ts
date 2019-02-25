@@ -12,6 +12,7 @@ import { NewsEditAddComponent } from './news-edit-add/news-edit-add.component';
 import { NewsService } from './services/news/news.service';
 import { FilterPipe } from './pipes/filter/filter.pipe';
 import { NewsApiService } from './services/news-api/news-api.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,8 @@ import { NewsApiService } from './services/news-api/news-api.service';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
     NgbModule.forRoot()
   ],
   providers: [

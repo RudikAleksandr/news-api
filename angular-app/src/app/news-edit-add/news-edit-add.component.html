@@ -1,28 +1,28 @@
-<section class="news-edit d-flex justify-content-around">
-  <div class="news-edit__row d-flex flex-column">
-    <label>Heading *</label>
-    <input type="text" [value]="news.title" (input)="onInputTitle($event)">
-    <label>Short description</label>
-    <input type="text" [value]="news.description" (input)="onInputDescription($event)">
-    <label>Content *</label>
-    <textarea class="news-edit__content" (input)="onInputContent($event)">{{news.content}}</textarea>
-  </div>
-  <div class="news-edit__row d-flex flex-column">
-    <div class="">
-      <label class="news-edit__image-label">Image</label>
-      <label class="news-edit__radio"><input type="radio" name="path-image" value="url" checked> URL</label>
-      <label class="news-edit__radio"><input type="radio" name="path-image" value="ofile"> OFile</label>
+  <form [formGroup]="newsFormGroup" class="news-edit d-flex justify-content-around">
+    <div class="news-edit__row d-flex flex-column">
+      <label>Heading *</label>
+      <input type="text" [formControl]="titleControl">
+      <label>Short description</label>
+      <input type="text" [formControl]="descriptionControl">
+      <label>Content *</label>
+      <textarea class="news-edit__content" [formControl]="contentControl"></textarea>
     </div>
-    <input type="text" [value]="news.urlToImage" (input)="onInputUrlToImage($event)">
-    <label value>Date</label>
-    <input type="text" [value]="news.publishedAt | date:'medium'" (input)="onInputPublishedAt($event)">
-    <label>Author</label>
-    <input type="text" [value]="news.author" (input)="onInputAuthor($event)">
-    <label>Source URL</label>
-    <input type="text" [value]="news.url" (input)="onInputUrl($event)">
-    <div class="news-edit__btn-block d-flex justify-content-around align-items-end">
-      <button (click)="onClickSave()" [disabled]="isDisabledSave">Save</button>
-      <button (click)="onClickCancel()">Cancel</button>
+    <div class="news-edit__row d-flex flex-column">
+      <div class="">
+        <label class="news-edit__image-label">Image</label>
+        <label class="news-edit__radio"><input type="radio" name="path-image" value="url" checked> URL</label>
+        <label class="news-edit__radio"><input type="radio" name="path-image" value="ofile"> OFile</label>
+      </div>
+      <input type="text" [formControl]="urlToImageControl">
+      <label value>Date</label>
+      <input type="text" [formControl]="publishedAtControl">
+      <label>Author</label>
+      <input type="text" [formControl]="authorControl">
+      <label>Source URL</label>
+      <input type="text" [formControl]="urlControl">
+      <div class="news-edit__btn-block d-flex justify-content-around align-items-end">
+        <button type="button" (click)="onClickSave()" [disabled]="newsFormGroup.invalid">Save</button>
+        <button type="button" (click)="onClickCancel()">Cancel</button>
+      </div>
     </div>
-  </div>
-  </section>
+  </form>

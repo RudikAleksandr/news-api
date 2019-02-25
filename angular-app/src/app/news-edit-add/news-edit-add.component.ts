@@ -4,24 +4,33 @@ import DbNewsUser from '../../utils/db-news-user';
 import config from '../../config';
 import { NewsService } from '../services/news/news.service';
 import { IArticle } from '../../interfaces';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'app-news-edit',
   templateUrl: './news-edit-add.component.html',
   styleUrls: ['./news-edit-add.component.css']
 })
 export class NewsEditAddComponent implements OnInit {
-  private isDisabledSave: boolean = false;
   private isAdd: boolean = false;
-  private news: IArticle = {
-    author: '',
-    content: '',
-    description: '',
-    publishedAt: '',
-    title: '',
-    urlToImage: '',
-    url: '',
-    isUserNews: true,
-  };
+  private id: string;
+  private titleControl: FormControl = new FormControl('', [Validators.required]);
+  private descriptionControl: FormControl = new FormControl('');
+  private contentControl: FormControl = new FormControl('', [Validators.required]);
+  private urlToImageControl: FormControl = new FormControl('');
+  private publishedAtControl: FormControl = new FormControl('');
+  private authorControl: FormControl = new FormControl('');
+  private urlControl: FormControl = new FormControl('');
+  private isUserNewsControl: FormControl = new FormControl(true);
+  private newsFormGroup: FormGroup = new FormGroup({
+    title: this.titleControl,
+    description: this.descriptionControl,
+    content: this.contentControl,
+    urlToImage: this.urlToImageControl,
+    publishedAt: this.publishedAtControl,
+    author: this.authorControl,
+    url: this.urlControl,
+    isUserNews: this.isUserNewsControl,
+  });
 
   constructor(
     private route: ActivatedRoute,
@@ -34,45 +43,11 @@ export class NewsEditAddComponent implements OnInit {
   ngOnInit() {
   }
 
-  checkSaveDisabled() {
-    const check = this.news['title'].trim() && this.news['content'].trim();
-    this.isDisabledSave = !!!check;
-  }
-
-  onInputTitle(event) {
-    this.news['title'] = event.target.value;
-    this.checkSaveDisabled();
-  }
-
-  onInputDescription(event) {
-    this.news['description'] = event.target.value;
-  }
-
-  onInputContent(event) {
-    this.news['content'] = event.target.value;
-    this.checkSaveDisabled();
-  }
-
-  onInputUrlToImage(event) {
-    this.news['urlToImage'] = event.target.value;
-  }
-
-  onInputPublishedAt(event) {
-    this.news['publishedAt'] = event.target.value;
-  }
-
-  onInputAuthor(event) {
-    this.news['author'] = event.target.value;
-  }
-
-  onInputUrl(event) {
-    this.news['url'] = event.target.value;
-  }
-
   onClickSave() {
-    const news = this.news;
-    if (!news['publishedAt'].trim()) {
-      news['publishedAt'] = new Date().toISOString();
+    const news: IArticle = this.newsFormGroup.value;
+    news.id = this.id;
+    if (!news.publishedAt.trim()) {
+      news.publishedAt = new Date().toISOString();
     }
 
     if (this.isAdd) {
@@ -90,17 +65,22 @@ export class NewsEditAddComponent implements OnInit {
   }
 
   handlerRouteParams(params: object) {
-    const idNews = params['id'];
-    if (idNews) {
-      const news = DbNewsUser.getUserNewsById(idNews);
+    this.id = params['id'];
+    if (this.id) {
+      const news = DbNewsUser.getUserNewsById(this.id);
       if (news) {
-        this.news = news;
+        this.titleControl.setValue(news.title);
+        this.descriptionControl.setValue(news.description);
+        this.contentControl.setValue(news.content);
+        this.urlToImageControl.setValue(news.urlToImage);
+        this.publishedAtControl.setValue(news.publishedAt);
+        this.authorControl.setValue(news.author);
+        this.urlControl.setValue(news.url);
       } else {
         alert('Can not find news by id');
         this.router.navigate(['']);
       }
     } else {
-      this.isDisabledSave = true;
       this.isAdd = true;
     }
   }

@@ -75,6 +75,9 @@ export class HeaderAppComponent implements OnInit {
         this.title = 'Edit';
         this.isShowNav = false;
       } else if (url === config.ROUTE_CONTENT) {
+        if (val.url.includes(`${config.ROUTE_CONTENT}/${config.ID_USER_SOURCE}`)) {
+          this.title = 'My news';
+        }
         this.isShowNav = false;
       } else if (url === config.ROUTE_ADD) {
         this.title = 'Add';
