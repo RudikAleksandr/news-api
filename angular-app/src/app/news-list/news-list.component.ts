@@ -9,12 +9,12 @@ import { IArticle } from '../../interfaces';
   styleUrls: ['./news-list.component.css']
 })
 export class NewsListComponent implements OnInit {
-  private wordsFilter = '';
+  public wordsFilter = '';
   @Input() newsList: Array<IArticle> = [];
   @Output() clickLoadButton: EventEmitter<number> = new EventEmitter();
 
   constructor(
-    private newsService: NewsService,
+    public newsService: NewsService,
   ) {
     this.newsService.wordsFilterEvent.subscribe(this.handlerFilterNews.bind(this));
   }

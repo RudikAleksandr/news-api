@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, Output } from '@angular/core';
-import { EventEmitter } from '@angular/core';
 import { NewsService } from '../services/news/news.service';
 import { IArticle } from '../../interfaces';
 @Component({
@@ -10,7 +9,7 @@ import { IArticle } from '../../interfaces';
 export class NewsItemComponent implements OnInit {
   @Input() news: IArticle;
 
-  constructor(private newsService: NewsService) {
+  constructor(public newsService: NewsService) {
 
   }
   ngOnInit() { }

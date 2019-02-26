@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
-import DbNewsUser from '../utils/db-news-user';
 import config from '../config';
 import { NewsService } from './services/news/news.service';
 import { NewsApiService } from './services/news-api/news-api.service';
+import { NewsUserService } from './services/news-user/news-user.service';
 import { IArticle } from '../interfaces';
 
 @Component({
@@ -24,6 +24,7 @@ export class AppComponent {
     private router: Router,
     private newsService: NewsService,
     private newsApiService: NewsApiService,
+    private newsUserService: NewsUserService,
   ) {
     this.router.events.subscribe(this.handlerRouterEvents.bind(this));
     this.newsService.editNewsEvent.subscribe(this.handlerEditContent.bind(this));
@@ -43,7 +44,7 @@ export class AppComponent {
 
   httpGetArticlesSource(idSelectedSource: string, countNews: number = this.COUNT_ADD_VIEW_NEWS) {
     this.newsApiService.httpGetArticlesSource(idSelectedSource, countNews).subscribe((articles: Array<IArticle>) => {
-      const articlesWithId = DbNewsUser.setIdForNewsAPI(articles);
+      const articlesWithId = this.newsUserService.setIdForNewsAPI(articles);
       this.newsService.setToCache(idSelectedSource, articlesWithId);
       this.viewNews = articlesWithId;
     });
@@ -55,9 +56,10 @@ export class AppComponent {
     if (cacheNews && cacheNews.length >= this.COUNT_ADD_VIEW_NEWS) {
       this.viewNews = [...cacheNews.slice(0, this.COUNT_ADD_VIEW_NEWS)];
     } else if (idSelectedSource === this.ID_USER_SOURCE) {
-      const userNews = DbNewsUser.getUserNews(0, this.COUNT_ADD_VIEW_NEWS);
-      this.newsService.setToCache(this.ID_USER_SOURCE, userNews);
-      this.viewNews = [...userNews];
+      this.newsUserService.getUserNews(0, this.COUNT_ADD_VIEW_NEWS).subscribe((userNews: Array<IArticle>) => {
+        this.newsService.setToCache(this.ID_USER_SOURCE, userNews);
+        this.viewNews = [...userNews];
+      });
     } else {
       this.httpGetArticlesSource(idSelectedSource);
     }
@@ -76,12 +78,13 @@ export class AppComponent {
     if (cacheNews.length >= newCountViewNews) {
       this.viewNews.push(...cacheNews.slice(countViewNews, newCountViewNews));
     } else if (this.isUserNews) {
-      const userNews = DbNewsUser.getUserNews(countViewNews, this.COUNT_ADD_VIEW_NEWS);
-      if (userNews.length) {
-        this.viewNews = [...this.viewNews, ...userNews];
-      } else {
-        alert('Load all news');
-      }
+      this.newsUserService.getUserNews(countViewNews, this.COUNT_ADD_VIEW_NEWS).subscribe((userNews: Array<IArticle>) => {
+        if (userNews.length) {
+          this.viewNews = [...this.viewNews, ...userNews];
+        } else {
+          alert('Load all news');
+        }
+      });
     } else {
       this.httpGetArticlesSource(idSelectedSource, newCountViewNews);
     }
@@ -113,9 +116,10 @@ export class AppComponent {
   }
 
   handlerDeleteNews(id: string) {
-    DbNewsUser.removeUserNewsById(id);
-    this.newsService.removeFromCacheById(this.ID_USER_SOURCE, id);
-    this.setNewsBySourceId(this.ID_USER_SOURCE);
+    this.newsUserService.removeUserNewsById(id).subscribe(() => {
+      this.newsService.removeFromCacheById(this.ID_USER_SOURCE, id);
+      this.setNewsBySourceId(this.ID_USER_SOURCE);
+    });
   }
 
   setRouterNavigate(configRouter) {

@@ -3,11 +3,15 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng build && nodemon -r @babel/register ./bin/www",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "buildclient": "cd client && ng build",
+    "runclient": "cd client && npm start",
+    "devstart": "nodemon --inspect ./bin/www",
+    "dev": "npm run buildclient & concurrently --kill-others \"npm run runclient\" \"npm run devstart\""
   },
   "private": true,
   "dependencies": {
@@ -24,7 +28,21 @@
     "core-js": "^2.5.4",
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",
-    "zone.js": "~0.8.26"
+    "zone.js": "~0.8.26",
+    "body-parser": "^1.18.3",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "express": "~4.16.0",
+    "express-session": "^1.15.6",
+    "express-winston": "^3.0.1",
+    "http-errors": "~1.6.2",
+    "jade": "~1.11.0",
+    "mongoose": "^5.4.10",
+    "morgan": "~1.9.0",
+    "passport": "^0.4.0",
+    "passport-facebook": "^3.0.0",
+    "passport-local": "^1.0.0",
+    "winston": "^3.1.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.13.0",
@@ -45,6 +63,11 @@
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
-    "typescript": "~3.2.2"
+    "typescript": "~3.2.2",
+    "@babel/core": "^7.2.2",
+    "@babel/preset-env": "^7.2.3",
+    "@babel/register": "^7.0.0",
+    "babel-loader": "^8.0.5",
+    "nodemon": "^1.18.9"
   }
 }

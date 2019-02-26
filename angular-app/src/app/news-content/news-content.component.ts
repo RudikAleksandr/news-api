@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import DbNewsUser from '../../utils/db-news-user';
 import config from '../../config';
 import { NewsService } from '../services/news/news.service';
 import { IArticle } from '../../interfaces';
+import { NewsUserService } from '../services/news-user/news-user.service';
 @Component({
   selector: 'app-news-content',
   templateUrl: './news-content.component.html',
@@ -22,9 +22,10 @@ export class NewsContentComponent implements OnInit {
   public title: string;
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private newsService: NewsService,
+    public route: ActivatedRoute,
+    public router: Router,
+    public newsService: NewsService,
+    public newsUserService: NewsUserService,
   ) {
     this.route.params.subscribe(this.handlerRouteParams.bind(this));
   }
@@ -34,15 +35,15 @@ export class NewsContentComponent implements OnInit {
   handlerRouteParams(params: object) {
     const idNews = params['id'];
     const idSource = params['source'];
-    let news: IArticle;
 
     if (idSource === config.ID_USER_SOURCE) {
-      news = DbNewsUser.getUserNewsById(idNews);
+      this.newsUserService.getUserNewsById(idNews).subscribe((news: IArticle) => {
+        this.news = news;
+      });
     } else {
-      news = this.newsService.getFromCacheById(idSource, idNews);
+      this.news = this.newsService.getFromCacheById(idSource, idNews);
     }
 
-    this.news = news;
   }
 
   onClickBack() {
@@ -56,8 +57,8 @@ export class NewsContentComponent implements OnInit {
   onClickDelete() {
     const id = this.news['id'];
     this.newsService.removeFromCacheById(config.ID_USER_SOURCE, id);
-    DbNewsUser.removeUserNewsById(id);
-    this.router.navigate(['']);
+    this.newsUserService.removeUserNewsById(id).subscribe(() => {
+      this.router.navigate(['']);
+    });
   }
-
 }

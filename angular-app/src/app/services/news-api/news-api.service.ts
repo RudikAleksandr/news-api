@@ -5,11 +5,11 @@ import config from '../../../config';
 import {IArticlesSource, IAllSources} from '../../../interfaces';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class NewsApiService {
   constructor(
-    private http: HttpClient,
+    public http: HttpClient,
   ) { }
 
   httpGetAllSources() {

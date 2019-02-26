@@ -1,27 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import DbNewsUser from '../../utils/db-news-user';
 import config from '../../config';
 import { NewsService } from '../services/news/news.service';
 import { IArticle } from '../../interfaces';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { NewsUserService } from '../services/news-user/news-user.service';
 @Component({
   selector: 'app-news-edit',
   templateUrl: './news-edit-add.component.html',
   styleUrls: ['./news-edit-add.component.css']
 })
 export class NewsEditAddComponent implements OnInit {
-  private isAdd: boolean = false;
-  private id: string;
-  private titleControl: FormControl = new FormControl('', [Validators.required]);
-  private descriptionControl: FormControl = new FormControl('');
-  private contentControl: FormControl = new FormControl('', [Validators.required]);
-  private urlToImageControl: FormControl = new FormControl('');
-  private publishedAtControl: FormControl = new FormControl('');
-  private authorControl: FormControl = new FormControl('');
-  private urlControl: FormControl = new FormControl('');
-  private isUserNewsControl: FormControl = new FormControl(true);
-  private newsFormGroup: FormGroup = new FormGroup({
+  public isAdd: boolean = false;
+  public id: string;
+  public titleControl: FormControl = new FormControl('', [Validators.required]);
+  public descriptionControl: FormControl = new FormControl('');
+  public contentControl: FormControl = new FormControl('', [Validators.required]);
+  public urlToImageControl: FormControl = new FormControl('');
+  public publishedAtControl: FormControl = new FormControl('');
+  public authorControl: FormControl = new FormControl('');
+  public urlControl: FormControl = new FormControl('');
+  public isUserNewsControl: FormControl = new FormControl(true);
+  public newsFormGroup: FormGroup = new FormGroup({
     title: this.titleControl,
     description: this.descriptionControl,
     content: this.contentControl,
@@ -33,9 +33,10 @@ export class NewsEditAddComponent implements OnInit {
   });
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private newsService: NewsService,
+    public route: ActivatedRoute,
+    public router: Router,
+    public newsService: NewsService,
+    public newsUserService: NewsUserService,
   ) {
     this.route.params.subscribe(this.handlerRouteParams.bind(this));
    }
@@ -51,13 +52,15 @@ export class NewsEditAddComponent implements OnInit {
     }
 
     if (this.isAdd) {
-      DbNewsUser.addNews(news);
+      this.newsUserService.addNews(news).subscribe(() => {
+        this.router.navigate(['']);
+      });
     } else {
-      DbNewsUser.editNews(news);
-      this.newsService.editToCacheById(config.ID_USER_SOURCE, news);
+      this.newsUserService.editNews(news).subscribe(() => {
+        this.newsService.editToCacheById(config.ID_USER_SOURCE, news);
+        this.router.navigate(['']);
+      });
     }
-
-    this.router.navigate(['']);
   }
 
   onClickCancel() {
@@ -67,19 +70,20 @@ export class NewsEditAddComponent implements OnInit {
   handlerRouteParams(params: object) {
     this.id = params['id'];
     if (this.id) {
-      const news = DbNewsUser.getUserNewsById(this.id);
-      if (news) {
-        this.titleControl.setValue(news.title);
-        this.descriptionControl.setValue(news.description);
-        this.contentControl.setValue(news.content);
-        this.urlToImageControl.setValue(news.urlToImage);
-        this.publishedAtControl.setValue(news.publishedAt);
-        this.authorControl.setValue(news.author);
-        this.urlControl.setValue(news.url);
-      } else {
-        alert('Can not find news by id');
-        this.router.navigate(['']);
-      }
+      this.newsUserService.getUserNewsById(this.id).subscribe((news: IArticle) => {
+        if (news) {
+          this.titleControl.setValue(news.title);
+          this.descriptionControl.setValue(news.description);
+          this.contentControl.setValue(news.content);
+          this.urlToImageControl.setValue(news.urlToImage);
+          this.publishedAtControl.setValue(news.publishedAt);
+          this.authorControl.setValue(news.author);
+          this.urlControl.setValue(news.url);
+        } else {
+          alert('Can not find news by id');
+          this.router.navigate(['']);
+        }
+      });
     } else {
       this.isAdd = true;
     }

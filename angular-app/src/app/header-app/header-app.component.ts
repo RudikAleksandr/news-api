@@ -9,11 +9,11 @@ import { NewsService } from '../services/news/news.service';
   styleUrls: ['./header-app.component.css']
 })
 export class HeaderAppComponent implements OnInit {
-  private isCreatedUserNews: boolean;
-  private nameSource: string;
-  private title: string;
-  private keyWords: string = '';
-  private isShowNav: boolean = true;
+  public isCreatedUserNews: boolean;
+  public nameSource: string;
+  public title: string;
+  public keyWords: string = '';
+  public isShowNav: boolean = true;
 
   @Input() sources: Array<object>;
   @Output() idSelectedSource: EventEmitter<string> = new EventEmitter();
@@ -21,9 +21,9 @@ export class HeaderAppComponent implements OnInit {
   @Output() addArticle: EventEmitter<Array<string>> = new EventEmitter();
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private newsService: NewsService,
+    public route: ActivatedRoute,
+    public router: Router,
+    public newsService: NewsService,
   ) {
     this.router.events.subscribe(this.handlerRouterEvents.bind(this));
   }

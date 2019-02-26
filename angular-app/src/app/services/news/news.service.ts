@@ -9,7 +9,7 @@ export class NewsService {
   public editNewsEvent: EventEmitter<string> = new EventEmitter();
   public deleteNewsEvent: EventEmitter<string> = new EventEmitter();
   public wordsFilterEvent: EventEmitter<string> = new EventEmitter();
-  private cache: object = {};
+  public cache: object = {};
 
   constructor() { }
 

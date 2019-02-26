@@ -13,6 +13,7 @@ import { NewsService } from './services/news/news.service';
 import { FilterPipe } from './pipes/filter/filter.pipe';
 import { NewsApiService } from './services/news-api/news-api.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NewsUserService } from './services/news-user/news-user.service';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   providers: [
     NewsService,
     NewsApiService,
+    NewsUserService,
   ],
   bootstrap: [AppComponent]
 })

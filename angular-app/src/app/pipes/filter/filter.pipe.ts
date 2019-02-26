@@ -1,14 +1,15 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { IArticle } from 'src/interfaces';
 
 @Pipe({
   name: 'filter'
 })
 export class FilterPipe implements PipeTransform {
 
-  transform(value: Array<Object>, keyWords: string): Array<Object> {
+  transform(value: Array<IArticle>, keyWords: string): Array<IArticle> {
     const listKeyWords = keyWords.trim().split(/\W+/g);
 
-    if (!listKeyWords.length) {
+    if (!listKeyWords[0]) {
       return value;
     }
 
