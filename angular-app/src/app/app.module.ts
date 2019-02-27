@@ -23,7 +23,7 @@ import { NewsUserService } from './services/news-user/news-user.service';
     NewsListComponent,
     NewsContentComponent,
     NewsEditAddComponent,
-    FilterPipe
+    FilterPipe,
   ],
   imports: [
     BrowserModule,

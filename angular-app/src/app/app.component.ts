@@ -14,17 +14,17 @@ import { IArticle } from '../interfaces';
 export class AppComponent {
   public sourcesNews: Array<object>;
   public viewNews: Array<IArticle> = [];
-  private idSelectedSource: string;
-  private isUserNews: boolean;
-  private COUNT_ADD_VIEW_NEWS = 5;
-  private ID_USER_SOURCE: string = config.ID_USER_SOURCE;
+  public idSelectedSource: string;
+  public isUserNews: boolean;
+  public COUNT_ADD_VIEW_NEWS = 5;
+  public ID_USER_SOURCE: string = config.ID_USER_SOURCE;
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private newsService: NewsService,
-    private newsApiService: NewsApiService,
-    private newsUserService: NewsUserService,
+    public route: ActivatedRoute,
+    public router: Router,
+    public newsService: NewsService,
+    public newsApiService: NewsApiService,
+    public newsUserService: NewsUserService,
   ) {
     this.router.events.subscribe(this.handlerRouterEvents.bind(this));
     this.newsService.editNewsEvent.subscribe(this.handlerEditContent.bind(this));
@@ -39,7 +39,7 @@ export class AppComponent {
   initSourcesNews() {
     this.newsApiService.httpGetAllSources().subscribe((data: Array<object>) => {
       this.sourcesNews = data;
-    })
+    });
   }
 
   httpGetArticlesSource(idSelectedSource: string, countNews: number = this.COUNT_ADD_VIEW_NEWS) {

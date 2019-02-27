@@ -44,6 +44,21 @@ export class NewsEditAddComponent implements OnInit {
   ngOnInit() {
   }
 
+  setControl(news: IArticle) {
+    if (news) {
+      this.titleControl.setValue(news.title);
+      this.descriptionControl.setValue(news.description);
+      this.contentControl.setValue(news.content);
+      this.urlToImageControl.setValue(news.urlToImage);
+      this.publishedAtControl.setValue(news.publishedAt);
+      this.authorControl.setValue(news.author);
+      this.urlControl.setValue(news.url);
+    } else {
+      alert('Can not find news by id');
+      this.router.navigate(['']);
+    }
+  }
+
   onClickSave() {
     const news: IArticle = this.newsFormGroup.value;
     news.id = this.id;
@@ -71,21 +86,12 @@ export class NewsEditAddComponent implements OnInit {
     this.id = params['id'];
     if (this.id) {
       this.newsUserService.getUserNewsById(this.id).subscribe((news: IArticle) => {
-        if (news) {
-          this.titleControl.setValue(news.title);
-          this.descriptionControl.setValue(news.description);
-          this.contentControl.setValue(news.content);
-          this.urlToImageControl.setValue(news.urlToImage);
-          this.publishedAtControl.setValue(news.publishedAt);
-          this.authorControl.setValue(news.author);
-          this.urlControl.setValue(news.url);
-        } else {
-          alert('Can not find news by id');
-          this.router.navigate(['']);
-        }
+        this.setControl(news);
       });
     } else {
       this.isAdd = true;
     }
   }
+
+
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import config from '../../config';
 import { NewsService } from '../services/news/news.service';
@@ -26,11 +26,11 @@ export class NewsContentComponent implements OnInit {
     public router: Router,
     public newsService: NewsService,
     public newsUserService: NewsUserService,
-  ) {
-    this.route.params.subscribe(this.handlerRouteParams.bind(this));
-  }
+  ) {}
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.route.params.subscribe(this.handlerRouteParams.bind(this));
+   }
 
   handlerRouteParams(params: object) {
     const idNews = params['id'];

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import config from 'src/config';
 import { IArticle } from '../../../interfaces';
 
 @Injectable({
@@ -42,6 +41,6 @@ export class NewsUserService {
     return news.map((item) => {
       const id = item.publishedAt.replace(/-|:/g, '');
       return {...item, id};
-    })
+    });
   }
 }

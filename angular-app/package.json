@@ -6,12 +6,9 @@
     "start": "ng build && nodemon -r @babel/register ./bin/www",
     "build": "ng build",
     "test": "ng test",
+    "coverage": "ng test --code-coverage",
     "lint": "ng lint",
-    "e2e": "ng e2e",
-    "buildclient": "cd client && ng build",
-    "runclient": "cd client && npm start",
-    "devstart": "nodemon --inspect ./bin/www",
-    "dev": "npm run buildclient & concurrently --kill-others \"npm run runclient\" \"npm run devstart\""
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {

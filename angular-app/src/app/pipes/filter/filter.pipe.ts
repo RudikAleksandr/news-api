@@ -17,7 +17,7 @@ export class FilterPipe implements PipeTransform {
 
     listKeyWords.forEach((word) => {
       filterWordsLowerCase.push(word.toLocaleLowerCase());
-    })
+    });
 
     return value.filter((news) => {
       return ['author', 'description', 'title'].some((field) => {
@@ -25,7 +25,7 @@ export class FilterPipe implements PipeTransform {
           const wordsField = news[field].trim().split(/\W+/g);
           return wordsField.some((keyWord) => {
             return filterWordsLowerCase.includes(keyWord.toLocaleLowerCase());
-          })
+          });
         }
       });
     });

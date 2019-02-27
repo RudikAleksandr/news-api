@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { NewsService } from '../services/news/news.service';
 import { IArticle } from '../../interfaces';
 @Component({
